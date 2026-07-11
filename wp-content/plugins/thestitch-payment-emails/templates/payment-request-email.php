@@ -29,7 +29,7 @@ $brand = TheStitch_Payment_Email_Brand::luxury_tokens();
             <?php endif; ?>
 
             <div style="padding:18px 20px;background:<?php echo esc_attr($brand['section_bg']); ?>;border:1px solid <?php echo esc_attr($brand['section_border']); ?>;border-radius:12px;">
-                <div style="font-size:13px;font-weight:700;color:#6a563d;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">Quote Summary</div>
+                            <div style="font-size:13px;font-weight:700;color:#111111;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">Quote Summary</div>
                 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
                     <tr>
                         <td style="padding:8px 0;border-bottom:1px solid <?php echo esc_attr($brand['row_border']); ?>;color:<?php echo esc_attr($brand['label_text']); ?>;font-size:14px;width:42%;">Reference</td>
@@ -60,7 +60,7 @@ $brand = TheStitch_Payment_Email_Brand::luxury_tokens();
 
             <?php if ($design_preview_url) : ?>
             <div style="margin-top:22px;text-align:center;">
-                <div style="font-size:13px;font-weight:700;color:#6a563d;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">Design Preview</div>
+                <div style="font-size:13px;font-weight:700;color:#111111;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">Design Preview</div>
                 <img src="<?php echo esc_url($design_preview_url); ?>" alt="Design preview" style="max-width:100%;height:auto;border-radius:12px;border:1px solid <?php echo esc_attr($brand['section_border']); ?>;">
             </div>
             <?php endif; ?>

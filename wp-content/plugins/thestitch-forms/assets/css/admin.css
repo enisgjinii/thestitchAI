@@ -3,14 +3,14 @@
    ============================================================ */
 
 :root {
-    --ts: #8b7355;
-    --ts-dark: #6d5a47;
-    --ts-accent: #c9a96e;
-    --ts-bg: #f9f7f4;
+    --ts: #111111;
+    --ts-dark: #000000;
+    --ts-accent: #333333;
+    --ts-bg: #f5f5f5;
     --ts-surface: #ffffff;
-    --ts-border: #e8ddd3;
-    --ts-text: #2e2a25;
-    --ts-muted: #7a7068;
+    --ts-border: #e5e5e5;
+    --ts-text: #111111;
+    --ts-muted: #666666;
     --ts-radius: 12px;
     --ts-shadow: 0 2px 14px rgba(0, 0, 0, 0.06);
     --ts-success: #16a34a;
@@ -520,8 +520,8 @@
     letter-spacing: .02em;
 }
 .ts-type-badge--bridal   { background: #fce7f3; color: #be185d; }
-.ts-type-badge--recreate { background: #faf0df; color: #7a5b24; }
-.ts-type-badge--create   { background: #f3ede5; color: #6d5a47; }
+.ts-type-badge--recreate { background: #f5f5f5; color: #111111; border: 1px solid #e5e5e5; }
+.ts-type-badge--create   { background: #111111; color: #ffffff; }
 
 /* Submission detail meta box */
 .ts-submission-grid {

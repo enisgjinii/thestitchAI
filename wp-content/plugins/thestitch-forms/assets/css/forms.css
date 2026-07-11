@@ -3,40 +3,40 @@
    ============================================================ */
 
 :root {
-	--ts-primary: #8b7355;
-	--ts-primary-dark: #6d5a47;
-	--ts-accent: #c9a96e;
+	--ts-primary: #111111;
+	--ts-primary-dark: #000000;
+	--ts-accent: #333333;
 	--ts-bg: #ffffff;
-	--ts-bg-soft: #faf8f5;
-	--ts-bg-muted: #f5f2ed;
-	--ts-text: #1a1a1a;
-	--ts-text-secondary: #666;
-	--ts-text-muted: #999;
-	--ts-border: #e5e2dd;
-	--ts-border-light: #f0ede8;
-	--ts-success: #22c55e;
-	--ts-error: #ef4444;
+	--ts-bg-soft: #fafafa;
+	--ts-bg-muted: #f5f5f5;
+	--ts-text: #111111;
+	--ts-text-secondary: #666666;
+	--ts-text-muted: #999999;
+	--ts-border: #e5e5e5;
+	--ts-border-light: #eeeeee;
+	--ts-success: #111111;
+	--ts-error: #dc2626;
 	--ts-radius: 12px;
 	--ts-radius-lg: 16px;
 	--ts-radius-full: 999px;
-	--ts-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+	--ts-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
 	--ts-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 	--ts-shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08);
 	--ts-font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 	--ts-transition: 0.2s ease;
 
 	/* Runtime-overridable settings from admin page */
-	--thestitch-primary: #8b7355;
-	--thestitch-hover: #6d5a47;
-	--thestitch-border: #e5e2dd;
-	--thestitch-focus: #8b7355;
-	--thestitch-success: #22c55e;
-	--thestitch-error: #ef4444;
+	--thestitch-primary: #111111;
+	--thestitch-hover: #000000;
+	--thestitch-border: #e5e5e5;
+	--thestitch-focus: #111111;
+	--thestitch-success: #111111;
+	--thestitch-error: #dc2626;
 	--thestitch-bg: #ffffff;
-	--thestitch-text: #1a1a1a;
+	--thestitch-text: #111111;
 	--thestitch-width: 640px;
 	--thestitch-radius: 16px;
-	--thestitch-btn-radius: 10px;
+	--thestitch-btn-radius: 999px;
 	--thestitch-panel-padding: 28px;
 }
 
@@ -62,8 +62,8 @@
 }
 
 .form-header-art {
-	height: 6px;
-	background: linear-gradient(90deg, var(--thestitch-primary), var(--ts-accent));
+	height: 3px;
+	background: #111111;
 }
 
 .header-icon { display: none; }
@@ -92,17 +92,17 @@
 .thestitch-form-container.bridal-form-wrap {
 	--thestitch-width: 920px;
 	background: #ffffff;
-	border: 1px solid rgba(201, 169, 110, 0.22);
+	border: 1px solid #e5e5e5;
 	padding: 0 0 28px;
 }
 
 .bridal-form-wrap .form-header-art {
-	height: 4px;
-	background: linear-gradient(90deg, var(--ts-accent), #d4b97a, var(--ts-accent));
+	height: 3px;
+	background: #111111;
 }
 
-.bridal-form-wrap h3 { color: #2f2a22; }
-.bridal-intro { color: #6f6458 !important; }
+.bridal-form-wrap h3 { color: #111111; }
+.bridal-intro { color: #666666 !important; }
 
 .bridal-form { padding: 0 28px; }
 
@@ -129,8 +129,8 @@
 .bridal-form input[type="time"] {
 	width: 100%;
 	background: #ffffff;
-	border: 1px solid rgba(201, 169, 110, 0.28);
-	color: #2f2a22;
+	border: 1px solid var(--ts-border);
+	color: #111111;
 	border-radius: 10px;
 	padding: 12px 14px;
 	font-size: 0.9rem;
@@ -140,15 +140,15 @@
 }
 
 .bridal-form .input-fun::placeholder,
-.bridal-form textarea::placeholder { color: #a29587; }
+.bridal-form textarea::placeholder { color: #999999; }
 
 .bridal-form .input-fun:focus,
 .bridal-form textarea:focus,
 .bridal-form select:focus,
 .bridal-form input[type="date"]:focus,
 .bridal-form input[type="time"]:focus {
-	border-color: var(--thestitch-primary);
-	box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.14);
+	border-color: #111111;
+	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
 }
 
 .bridal-form .date-grid {
@@ -199,13 +199,13 @@
 }
 
 .step-node.active .node-circle {
-	background: var(--thestitch-primary);
+	background: #111111;
 	color: #fff;
-	box-shadow: 0 3px 12px rgba(139, 115, 85, 0.3);
+	box-shadow: 0 3px 12px rgba(0, 0, 0, 0.18);
 }
 
 .step-node.done .node-circle {
-	background: var(--thestitch-success);
+	background: #333333;
 	color: #fff;
 }
 
@@ -217,8 +217,8 @@
 	font-weight: 600;
 }
 
-.step-node.active .node-label { color: var(--thestitch-primary); }
-.step-node.done .node-label { color: var(--thestitch-success); }
+.step-node.active .node-label { color: #111111; }
+.step-node.done .node-label { color: #333333; }
 
 .step-line {
 	flex: 1;
@@ -236,7 +236,7 @@
 	position: absolute;
 	inset: 0 auto 0 0;
 	width: 0;
-	background: var(--thestitch-success);
+	background: #333333;
 	transition: width 0.4s ease;
 }
 
@@ -254,18 +254,18 @@
 }
 
 .step-card {
-	background: var(--ts-bg-soft);
+	background: #ffffff;
 	border-radius: var(--ts-radius-lg);
 	padding: 24px;
 	margin-bottom: 16px;
-	border: 1px solid var(--ts-border-light);
+	border: 1px solid var(--ts-border);
 }
 
 .step-emoji {
 	text-align: center;
 	margin-bottom: 4px;
 	font-size: 1.8rem;
-	color: var(--thestitch-primary);
+	color: #111111;
 }
 
 .step-card h4 {
@@ -318,7 +318,7 @@
 .thestitch-form textarea:focus,
 .thestitch-form select:focus {
 	border-color: var(--thestitch-focus);
-	box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
 .input-fun::placeholder,
@@ -344,13 +344,13 @@
 }
 
 .drop-zone:hover {
-	border-color: var(--thestitch-primary);
-	background: rgba(139, 115, 85, 0.02);
+	border-color: #111111;
+	background: rgba(0, 0, 0, 0.02);
 }
 
 .drop-zone.drag-over {
-	border-color: var(--thestitch-primary);
-	background: rgba(139, 115, 85, 0.06);
+	border-color: #111111;
+	background: rgba(0, 0, 0, 0.04);
 	transform: scale(1.01);
 }
 
@@ -365,8 +365,8 @@
 
 .drop-icon {
 	font-size: 1.5rem;
-	color: var(--thestitch-primary);
-	opacity: 0.55;
+	color: #111111;
+	opacity: 0.45;
 	margin-bottom: 8px;
 }
 
@@ -449,9 +449,9 @@
 }
 
 .toggle-option input:checked + .toggle-card {
-	border-color: var(--thestitch-primary);
-	background: rgba(139, 115, 85, 0.04);
-	box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+	border-color: #111111;
+	background: #fafafa;
+	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
 	color: var(--thestitch-text);
 }
 
@@ -479,8 +479,8 @@
 }
 
 .ts-unit-selector .toggle-option input:checked + .toggle-card {
-	background: rgba(139, 115, 85, 0.06);
-	border-color: var(--thestitch-primary);
+	background: #fafafa;
+	border-color: #111111;
 	color: var(--thestitch-text);
 }
 
@@ -512,13 +512,13 @@
 }
 
 .chip span:hover {
-	border-color: var(--thestitch-primary);
-	color: var(--thestitch-primary);
+	border-color: #111111;
+	color: #111111;
 }
 
 .chip input:checked + span {
-	background: var(--thestitch-primary);
-	border-color: var(--thestitch-primary);
+	background: #111111;
+	border-color: #111111;
 	color: #fff;
 }
 
@@ -543,9 +543,9 @@
 
 .size-chart-toggle:hover,
 .size-chart-toggle.active {
-	border-color: var(--thestitch-primary);
-	color: var(--thestitch-primary);
-	background: rgba(139, 115, 85, 0.06);
+	border-color: #111111;
+	color: #111111;
+	background: #fafafa;
 }
 
 .size-chart-panel {
@@ -611,21 +611,23 @@
 	display: inline-flex;
 	align-items: center;
 	gap: 8px;
-	padding: 12px 24px;
-	background: var(--thestitch-primary);
+	padding: 12px 28px;
+	background: #111111;
 	color: #fff;
-	border: 0;
-	border-radius: var(--thestitch-btn-radius, 10px);
+	border: 1px solid #111111;
+	border-radius: var(--thestitch-btn-radius, 999px);
 	font-size: 0.88rem;
 	font-weight: 600;
 	cursor: pointer;
 	transition: all var(--ts-transition);
+	letter-spacing: 0.02em;
 }
 
 .btn-fun:hover {
-	background: var(--thestitch-hover);
+	background: #000000;
+	border-color: #000000;
 	transform: translateY(-1px);
-	box-shadow: 0 4px 14px rgba(139, 115, 85, 0.22);
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 
 .btn-back {
@@ -825,4 +827,107 @@
 	.bridal-form { padding: 0 20px; }
 	.form-response { margin: 0 20px 20px; }
 	.file-preview { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); }
+}
+
+/* ============================================================
+   Recreate form — black brand (matches thestitch.ai)
+   Overrides saved admin colors + theme button styles
+   ============================================================ */
+#RecreateForm.recreate-form-wrap,
+.recreate-form-wrap {
+	--thestitch-primary: #111111;
+	--thestitch-hover: #000000;
+	--thestitch-focus: #111111;
+	--thestitch-border: #e5e5e5;
+	--thestitch-text: #111111;
+	--thestitch-btn-radius: 999px;
+	border: 1px solid #eeeeee;
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+}
+
+#RecreateForm.recreate-form-wrap .form-header-art,
+.recreate-form-wrap .form-header-art {
+	height: 3px;
+	background: #111111;
+}
+
+#RecreateForm.recreate-form-wrap h3,
+.recreate-form-wrap h3 {
+	color: #111111;
+	font-weight: 700;
+}
+
+#RecreateForm.recreate-form-wrap .form-intro,
+.recreate-form-wrap .form-intro {
+	color: #666666;
+}
+
+#RecreateForm.recreate-form-wrap .step-card,
+.recreate-form-wrap .step-card {
+	background: #ffffff;
+	border-color: #e5e5e5;
+}
+
+#RecreateForm.recreate-form-wrap .step-emoji,
+#RecreateForm.recreate-form-wrap .drop-icon,
+#RecreateForm.recreate-form-wrap .step-svg,
+#RecreateForm.recreate-form-wrap .toggle-svg,
+.recreate-form-wrap .step-emoji,
+.recreate-form-wrap .drop-icon {
+	color: #111111 !important;
+}
+
+#RecreateForm.recreate-form-wrap .step-node.active .node-circle,
+.recreate-form-wrap .step-node.active .node-circle {
+	background: #111111 !important;
+}
+
+#RecreateForm.recreate-form-wrap .step-node.active .node-label,
+.recreate-form-wrap .step-node.active .node-label {
+	color: #111111 !important;
+}
+
+#RecreateForm.recreate-form-wrap .btn-fun,
+#RecreateForm.recreate-form-wrap .btn-next,
+#RecreateForm.recreate-form-wrap .btn-submit,
+.recreate-form-wrap .btn-fun,
+.recreate-form-wrap .btn-next,
+.recreate-form-wrap .btn-submit {
+	background: #111111 !important;
+	color: #ffffff !important;
+	border: 1px solid #111111 !important;
+	border-radius: 999px !important;
+	box-shadow: none !important;
+}
+
+#RecreateForm.recreate-form-wrap .btn-fun:hover,
+#RecreateForm.recreate-form-wrap .btn-next:hover,
+#RecreateForm.recreate-form-wrap .btn-submit:hover,
+.recreate-form-wrap .btn-fun:hover,
+.recreate-form-wrap .btn-next:hover,
+.recreate-form-wrap .btn-submit:hover {
+	background: #000000 !important;
+	border-color: #000000 !important;
+	color: #ffffff !important;
+}
+
+#RecreateForm.recreate-form-wrap .btn-back,
+.recreate-form-wrap .btn-back {
+	background: #ffffff !important;
+	color: #111111 !important;
+	border: 1px solid #e5e5e5 !important;
+}
+
+#RecreateForm.recreate-form-wrap .chip input:checked + span,
+#RecreateForm.recreate-form-wrap .toggle-option input:checked + .toggle-card,
+.recreate-form-wrap .chip input:checked + span,
+.recreate-form-wrap .toggle-option input:checked + .toggle-card {
+	border-color: #111111 !important;
+	background: #fafafa !important;
+}
+
+#RecreateForm.recreate-form-wrap .chip input:checked + span,
+.recreate-form-wrap .chip input:checked + span {
+	background: #111111 !important;
+	color: #ffffff !important;
 }

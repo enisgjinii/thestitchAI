@@ -22,6 +22,7 @@ class TheStitch_Forms {
 
     public function __construct() {
         add_action('init', [$this, 'register_cpt_submissions']);
+        add_action('init', [$this, 'maybe_migrate_legacy_brown_colors']);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_assets']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
         add_action('enqueue_block_editor_assets', [$this, 'enqueue_block_editor_assets']);
@@ -565,23 +566,23 @@ class TheStitch_Forms {
                     continue;
                 }
                 $details_html .= '<tr>';
-                $details_html .= '<td style="padding:8px 0;border-bottom:1px solid #f1f1f1;color:#7a6a4e;font-weight:600;width:42%;">' . esc_html($label) . '</td>';
-                $details_html .= '<td style="padding:8px 0;border-bottom:1px solid #f1f1f1;color:#2f2a22;">' . esc_html($value) . '</td>';
+                $details_html .= '<td style="padding:8px 0;border-bottom:1px solid #eeeeee;color:#666666;font-weight:600;width:42%;">' . esc_html($label) . '</td>';
+                $details_html .= '<td style="padding:8px 0;border-bottom:1px solid #eeeeee;color:#111111;">' . esc_html($value) . '</td>';
                 $details_html .= '</tr>';
             }
             $details_html .= '</table>';
         }
 
         $theme_tokens = [
-            'outer_bg' => '#f7f2ea',
-            'card_border' => '#eadfce',
-            'hero_bg' => 'linear-gradient(120deg,#8b7355,#c9a96e)',
+            'outer_bg' => '#f5f5f5',
+            'card_border' => '#e5e5e5',
+            'hero_bg' => '#111111',
             'hero_text' => '#ffffff',
-            'note_bg' => '#fcf8f1',
-            'note_border' => '#efe4d6',
-            'footer_bg' => '#fffdf9',
-            'footer_text' => '#8a7558',
-            'cta_bg' => '#8b7355',
+            'note_bg' => '#fafafa',
+            'note_border' => '#e5e5e5',
+            'footer_bg' => '#ffffff',
+            'footer_text' => '#666666',
+            'cta_bg' => '#111111',
             'cta_text' => '#ffffff',
         ];
 
@@ -643,19 +644,19 @@ class TheStitch_Forms {
         }
 
         $html = '
-            <div style="margin:0;padding:24px;background:' . esc_attr($theme_tokens['outer_bg']) . ';font-family:Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#2f2a22;">
+            <div style="margin:0;padding:24px;background:' . esc_attr($theme_tokens['outer_bg']) . ';font-family:Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#111111;">
                 <div style="max-width:640px;margin:0 auto;background:#fff;border:1px solid ' . esc_attr($theme_tokens['card_border']) . ';border-radius:18px;overflow:hidden;box-shadow:0 14px 36px rgba(32,22,8,.08);">
                     <div style="padding:26px 28px;background:' . esc_attr($theme_tokens['hero_bg']) . ';color:' . esc_attr($theme_tokens['hero_text']) . ';">
                         <div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;opacity:.92;">The Stitch</div>
-                        <h1 style="margin:8px 0 0;font-size:28px;line-height:1.2;">' . esc_html($heading) . '</h1>
-                        <p style="margin:10px 0 0;font-size:15px;line-height:1.5;opacity:.96;">' . esc_html($subheading) . '</p>
+                        <h1 style="margin:8px 0 0;font-size:28px;line-height:1.2;color:#ffffff;">' . esc_html($heading) . '</h1>
+                        <p style="margin:10px 0 0;font-size:15px;line-height:1.5;opacity:.96;color:#ffffff;">' . esc_html($subheading) . '</p>
                     </div>
                     <div style="padding:24px 28px;">
-                        <div style="font-size:15px;line-height:1.7;color:#3b3429;">' . $safe_message . '</div>
+                        <div style="font-size:15px;line-height:1.7;color:#333333;">' . $safe_message . '</div>
                         ' . $cta_html . '
                         <div style="margin-top:20px;padding:16px 18px;background:' . esc_attr($theme_tokens['note_bg']) . ';border:1px solid ' . esc_attr($theme_tokens['note_border']) . ';border-radius:12px;">
-                            <div style="font-size:13px;font-weight:700;color:#6a563d;letter-spacing:.04em;text-transform:uppercase;">Submission Summary</div>
-                            <div style="margin-top:8px;font-size:14px;color:#2f2a22;">
+                            <div style="font-size:13px;font-weight:700;color:#111111;letter-spacing:.04em;text-transform:uppercase;">Submission Summary</div>
+                            <div style="margin-top:8px;font-size:14px;color:#111111;">
                                 <div><strong>Type:</strong> ' . esc_html(ucfirst($submission_type)) . '</div>
                                 <div><strong>Received:</strong> ' . esc_html($submitted_at) . '</div>
                             </div>
@@ -924,7 +925,7 @@ class TheStitch_Forms {
                         <div class="ts-color-grid">
                             <div class="ts-color-item">
                                 <label>Primary Button Color</label>
-                                <input type="text" name="thestitch_forms_colors[button_primary]" class="ts-color-input" value="<?php echo esc_attr($colors['button_primary'] ?? '#8b7355'); ?>">
+                                <input type="text" name="thestitch_forms_colors[button_primary]" class="ts-color-input" value="<?php echo esc_attr($colors['button_primary'] ?? '#111111'); ?>">
                             </div>
                             <div class="ts-color-item">
                                 <label>Button Hover Color</label>
@@ -1259,15 +1260,29 @@ class TheStitch_Forms {
 
     private function get_default_colors() {
         return [
-            'button_primary' => '#8b7355',
-            'button_hover' => '#6d5a47',
-            'input_border' => '#e0e0e0',
-            'input_focus' => '#8b7355',
-            'success_color' => '#4caf50',
-            'error_color' => '#f44336',
+            'button_primary' => '#111111',
+            'button_hover' => '#000000',
+            'input_border' => '#e5e5e5',
+            'input_focus' => '#111111',
+            'success_color' => '#111111',
+            'error_color' => '#dc2626',
             'background' => '#ffffff',
-            'text_color' => '#333333'
+            'text_color' => '#111111',
         ];
+    }
+
+    private function maybe_migrate_legacy_brown_colors() {
+        $colors = get_option('thestitch_forms_colors');
+        if (!is_array($colors)) {
+            return;
+        }
+
+        $legacy_primaries = ['#8b7355', '#6d5a47', '#c9a96e'];
+        if (!in_array(strtolower((string) ($colors['button_primary'] ?? '')), $legacy_primaries, true)) {
+            return;
+        }
+
+        update_option('thestitch_forms_colors', $this->get_default_colors());
     }
 
     private function get_default_branding() {
@@ -1812,19 +1827,25 @@ class TheStitch_Forms {
             --thestitch-text: {$colors['text_color']};
             --thestitch-width: {$width_value};
             --thestitch-radius: {$branding['border_radius']}px;
-            --thestitch-btn-radius: {$branding['button_radius']}px;
+            --thestitch-btn-radius: 999px;
             --thestitch-panel-padding: {$branding['padding']}px;
         }
         .thestitch-form-container {
             border-radius: var(--thestitch-radius);
             background: {$colors['background']};
         }
-        .btn-submit, .btn-next {
+        .form-header-art {
             background: {$colors['button_primary']};
-            border-radius: var(--thestitch-btn-radius);
+        }
+        .btn-submit, .btn-next {
+            background: {$colors['button_primary']} !important;
+            border: 1px solid {$colors['button_primary']} !important;
+            color: #ffffff !important;
+            border-radius: 999px !important;
         }
         .btn-submit:hover, .btn-next:hover {
-            background: {$colors['button_hover']};
+            background: {$colors['button_hover']} !important;
+            border-color: {$colors['button_hover']} !important;
         }
         .thestitch-form input:focus, .thestitch-form textarea:focus, .thestitch-form select:focus {
             border-color: {$colors['input_focus']};

@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('THESTITCH_PAYMENT_EMAILS_VERSION', '1.0.2');
+define('THESTITCH_PAYMENT_EMAILS_VERSION', '1.1.0');
 define('THESTITCH_PAYMENT_EMAILS_PATH', plugin_dir_path(__FILE__));
 define('THESTITCH_PAYMENT_EMAILS_URL', plugin_dir_url(__FILE__));
 define('THESTITCH_PAYMENT_TEST_URL', 'https://example.com/thestitch-nomod-payment-test');
