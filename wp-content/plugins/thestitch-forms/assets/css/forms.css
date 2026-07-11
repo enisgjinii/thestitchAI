@@ -1,0 +1,827 @@
+/* ============================================================
+   The Stitch Custom Forms — Clean & Modern Frontend UI
+   ============================================================ */
+
+:root {
+	--ts-primary: #8b7355;
+	--ts-primary-dark: #6d5a47;
+	--ts-accent: #c9a96e;
+	--ts-bg: #ffffff;
+	--ts-bg-soft: #faf8f5;
+	--ts-bg-muted: #f5f2ed;
+	--ts-text: #1a1a1a;
+	--ts-text-secondary: #666;
+	--ts-text-muted: #999;
+	--ts-border: #e5e2dd;
+	--ts-border-light: #f0ede8;
+	--ts-success: #22c55e;
+	--ts-error: #ef4444;
+	--ts-radius: 12px;
+	--ts-radius-lg: 16px;
+	--ts-radius-full: 999px;
+	--ts-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+	--ts-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+	--ts-shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08);
+	--ts-font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	--ts-transition: 0.2s ease;
+
+	/* Runtime-overridable settings from admin page */
+	--thestitch-primary: #8b7355;
+	--thestitch-hover: #6d5a47;
+	--thestitch-border: #e5e2dd;
+	--thestitch-focus: #8b7355;
+	--thestitch-success: #22c55e;
+	--thestitch-error: #ef4444;
+	--thestitch-bg: #ffffff;
+	--thestitch-text: #1a1a1a;
+	--thestitch-width: 640px;
+	--thestitch-radius: 16px;
+	--thestitch-btn-radius: 10px;
+	--thestitch-panel-padding: 28px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+.thestitch-form-container {
+	width: min(100%, var(--thestitch-width, 100%));
+	max-width: 100%;
+	margin: 2rem auto;
+	padding: 0;
+	background: var(--thestitch-bg);
+	border-radius: var(--thestitch-radius);
+	box-shadow: var(--ts-shadow-lg);
+	font-family: var(--ts-font);
+	position: relative;
+	overflow: hidden;
+	animation: tsFormIn 0.45s ease;
+}
+
+@keyframes tsFormIn {
+	from { opacity: 0; transform: translateY(16px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+.form-header-art {
+	height: 6px;
+	background: linear-gradient(90deg, var(--thestitch-primary), var(--ts-accent));
+}
+
+.header-icon { display: none; }
+
+.thestitch-form-container h3 {
+	margin: 0;
+	padding: 28px 28px 8px;
+	color: var(--thestitch-text);
+	text-align: left;
+	font-size: 1.5rem;
+	font-weight: 700;
+	letter-spacing: -0.3px;
+	line-height: 1.3;
+}
+
+.thestitch-form-container .form-intro {
+	text-align: left;
+	margin: 0 0 24px;
+	padding: 0 28px;
+	color: var(--ts-text-secondary);
+	font-size: 0.9rem;
+	line-height: 1.6;
+}
+
+/* Bridal form light card variant */
+.thestitch-form-container.bridal-form-wrap {
+	--thestitch-width: 920px;
+	background: #ffffff;
+	border: 1px solid rgba(201, 169, 110, 0.22);
+	padding: 0 0 28px;
+}
+
+.bridal-form-wrap .form-header-art {
+	height: 4px;
+	background: linear-gradient(90deg, var(--ts-accent), #d4b97a, var(--ts-accent));
+}
+
+.bridal-form-wrap h3 { color: #2f2a22; }
+.bridal-intro { color: #6f6458 !important; }
+
+.bridal-form { padding: 0 28px; }
+
+.bridal-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+}
+
+.bridal-grid .field-full { grid-column: 1 / -1; }
+
+
+.bridal-form .field-label {
+	color: #5f5348;
+	font-size: 0.8rem;
+	font-weight: 600;
+	margin-top: 0;
+}
+
+.bridal-form .input-fun,
+.bridal-form textarea,
+.bridal-form select,
+.bridal-form input[type="date"],
+.bridal-form input[type="time"] {
+	width: 100%;
+	background: #ffffff;
+	border: 1px solid rgba(201, 169, 110, 0.28);
+	color: #2f2a22;
+	border-radius: 10px;
+	padding: 12px 14px;
+	font-size: 0.9rem;
+	font-family: inherit;
+	outline: none;
+	transition: border-color var(--ts-transition), box-shadow var(--ts-transition);
+}
+
+.bridal-form .input-fun::placeholder,
+.bridal-form textarea::placeholder { color: #a29587; }
+
+.bridal-form .input-fun:focus,
+.bridal-form textarea:focus,
+.bridal-form select:focus,
+.bridal-form input[type="date"]:focus,
+.bridal-form input[type="time"]:focus {
+	border-color: var(--thestitch-primary);
+	box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.14);
+}
+
+.bridal-form .date-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+}
+
+.bridal-form textarea {
+	min-height: 100px;
+	resize: vertical;
+}
+
+.bridal-form .bridal-submit {
+	width: 100%;
+	justify-content: center;
+	margin-top: 8px;
+}
+
+/* Step track */
+.step-track {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0;
+	padding: 4px 28px 28px;
+}
+
+.step-node {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+}
+
+.node-circle {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	background: var(--ts-bg-muted);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 700;
+	font-size: 0.8rem;
+	color: var(--ts-text-muted);
+	transition: all 0.35s ease;
+}
+
+.step-node.active .node-circle {
+	background: var(--thestitch-primary);
+	color: #fff;
+	box-shadow: 0 3px 12px rgba(139, 115, 85, 0.3);
+}
+
+.step-node.done .node-circle {
+	background: var(--thestitch-success);
+	color: #fff;
+}
+
+.node-label {
+	font-size: 0.65rem;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--ts-text-muted);
+	font-weight: 600;
+}
+
+.step-node.active .node-label { color: var(--thestitch-primary); }
+.step-node.done .node-label { color: var(--thestitch-success); }
+
+.step-line {
+	flex: 1;
+	max-width: 52px;
+	height: 2px;
+	background: var(--ts-border);
+	margin: 0 6px 20px;
+	border-radius: 2px;
+	position: relative;
+	overflow: hidden;
+}
+
+.step-line::after {
+	content: '';
+	position: absolute;
+	inset: 0 auto 0 0;
+	width: 0;
+	background: var(--thestitch-success);
+	transition: width 0.4s ease;
+}
+
+.step-line.filled::after { width: 100%; }
+
+/* Step card */
+.form-step {
+	padding: 0 28px;
+	animation: tsStepIn 0.35s ease;
+}
+
+@keyframes tsStepIn {
+	from { opacity: 0; transform: translateX(20px); }
+	to { opacity: 1; transform: translateX(0); }
+}
+
+.step-card {
+	background: var(--ts-bg-soft);
+	border-radius: var(--ts-radius-lg);
+	padding: 24px;
+	margin-bottom: 16px;
+	border: 1px solid var(--ts-border-light);
+}
+
+.step-emoji {
+	text-align: center;
+	margin-bottom: 4px;
+	font-size: 1.8rem;
+	color: var(--thestitch-primary);
+}
+
+.step-card h4 {
+	margin: 0 0 4px;
+	text-align: center;
+	font-size: 1.15rem;
+	color: var(--ts-text);
+}
+
+.step-helper {
+	margin: 0 0 20px;
+	text-align: center;
+	color: var(--ts-text-secondary);
+	font-size: 0.85rem;
+}
+
+.field-label {
+	display: block;
+	margin: 16px 0 6px;
+	font-weight: 600;
+	color: var(--ts-text);
+	font-size: 0.82rem;
+}
+
+.optional-tag {
+	margin-left: 4px;
+	font-weight: 400;
+	color: var(--ts-text-muted);
+	font-size: 0.7rem;
+	text-transform: uppercase;
+}
+
+.input-fun,
+.thestitch-form textarea,
+.thestitch-form select {
+	width: 100%;
+	padding: 11px 14px;
+	border: 1.5px solid var(--ts-border);
+	border-radius: 10px;
+	font-size: 0.9rem;
+	font-family: inherit;
+	background: #fff;
+	color: var(--ts-text);
+	outline: none;
+	transition: border-color var(--ts-transition), box-shadow var(--ts-transition);
+}
+
+.input-fun:focus,
+.thestitch-form textarea:focus,
+.thestitch-form select:focus {
+	border-color: var(--thestitch-focus);
+	box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+}
+
+.input-fun::placeholder,
+.thestitch-form textarea::placeholder { color: var(--ts-text-muted); }
+
+.thestitch-form textarea {
+	resize: vertical;
+	min-height: 90px;
+	line-height: 1.6;
+}
+
+/* Drop zone */
+.drop-zone {
+	position: relative;
+	border: 2px dashed var(--ts-border);
+	border-radius: var(--ts-radius);
+	padding: 28px 20px;
+	text-align: center;
+	cursor: pointer;
+	background: #fff;
+	transition: all var(--ts-transition);
+	margin-bottom: 8px;
+}
+
+.drop-zone:hover {
+	border-color: var(--thestitch-primary);
+	background: rgba(139, 115, 85, 0.02);
+}
+
+.drop-zone.drag-over {
+	border-color: var(--thestitch-primary);
+	background: rgba(139, 115, 85, 0.06);
+	transform: scale(1.01);
+}
+
+.drop-zone input[type="file"] {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+
+.drop-icon {
+	font-size: 1.5rem;
+	color: var(--thestitch-primary);
+	opacity: 0.55;
+	margin-bottom: 8px;
+}
+
+.drop-text {
+	margin: 0;
+	font-weight: 600;
+	font-size: 0.88rem;
+	color: var(--ts-text);
+}
+
+.drop-subtext {
+	margin: 4px 0 0;
+	color: var(--ts-text-muted);
+	font-size: 0.78rem;
+}
+
+.file-preview {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+	gap: 8px;
+	margin-top: 8px;
+}
+
+.file-preview-item {
+	position: relative;
+	border-radius: 10px;
+	overflow: hidden;
+	background: var(--ts-bg-muted);
+	aspect-ratio: 1;
+	box-shadow: var(--ts-shadow-sm);
+}
+
+.file-preview-item img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.file-preview-item .remove-btn {
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	width: 20px;
+	height: 20px;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(220, 38, 38, 0.92);
+	color: #fff;
+	cursor: pointer;
+	opacity: 0;
+	transition: opacity var(--ts-transition);
+}
+
+.file-preview-item:hover .remove-btn { opacity: 1; }
+
+/* Sizing */
+.sizing-toggle,
+.custom-fit-toggle {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+	margin-bottom: 14px;
+}
+
+.toggle-option input { display: none; }
+
+.toggle-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+	text-align: center;
+	padding: 16px 12px;
+	border: 1.5px solid var(--ts-border);
+	border-radius: var(--ts-radius);
+	cursor: pointer;
+	transition: all var(--ts-transition);
+	background: #fff;
+	color: var(--thestitch-text);
+}
+
+.toggle-option input:checked + .toggle-card {
+	border-color: var(--thestitch-primary);
+	background: rgba(139, 115, 85, 0.04);
+	box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+	color: var(--thestitch-text);
+}
+
+.toggle-label { font-weight: 700; font-size: 0.88rem; color: var(--thestitch-text); }
+.toggle-desc { font-size: 0.72rem; color: var(--ts-text-secondary); }
+
+.toggle-option input:checked + .toggle-card .toggle-label,
+.toggle-option input:checked + .toggle-card .toggle-desc {
+	color: var(--thestitch-text);
+}
+
+.ts-unit-selector {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-bottom: 16px;
+}
+
+.ts-unit-selector .toggle-card {
+	min-width: 120px;
+	padding: 14px 16px;
+	background: #fff;
+	color: var(--thestitch-text);
+	box-shadow: var(--ts-shadow-sm);
+}
+
+.ts-unit-selector .toggle-option input:checked + .toggle-card {
+	background: rgba(139, 115, 85, 0.06);
+	border-color: var(--thestitch-primary);
+	color: var(--thestitch-text);
+}
+
+.ts-unit-selector .toggle-label {
+	font-size: 0.9rem;
+	line-height: 1.2;
+	color: var(--thestitch-text);
+}
+
+.size-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.chip input { display: none; }
+
+.chip span {
+	display: inline-block;
+	padding: 8px 16px;
+	border: 1.5px solid var(--ts-border);
+	border-radius: var(--ts-radius-full);
+	font-weight: 600;
+	font-size: 0.82rem;
+	color: var(--ts-text-secondary);
+	background: #fff;
+	cursor: pointer;
+	transition: all var(--ts-transition);
+}
+
+.chip span:hover {
+	border-color: var(--thestitch-primary);
+	color: var(--thestitch-primary);
+}
+
+.chip input:checked + span {
+	background: var(--thestitch-primary);
+	border-color: var(--thestitch-primary);
+	color: #fff;
+}
+
+.size-header-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 8px;
+}
+
+.size-chart-toggle {
+	border: 1px solid var(--ts-border);
+	border-radius: var(--ts-radius-full);
+	background: #fff;
+	color: var(--ts-text-secondary);
+	font-size: 0.72rem;
+	font-weight: 600;
+	padding: 6px 12px;
+	cursor: pointer;
+}
+
+.size-chart-toggle:hover,
+.size-chart-toggle.active {
+	border-color: var(--thestitch-primary);
+	color: var(--thestitch-primary);
+	background: rgba(139, 115, 85, 0.06);
+}
+
+.size-chart-panel {
+	margin-top: 12px;
+	border: 1px solid var(--ts-border-light);
+	background: var(--ts-bg-soft);
+	border-radius: var(--ts-radius);
+	padding: 12px;
+}
+
+.size-chart-table-wrap { overflow-x: auto; }
+
+.size-chart-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.72rem;
+	background: #fff;
+}
+
+.size-chart-table th,
+.size-chart-table td {
+	border-bottom: 1px solid var(--ts-border-light);
+	padding: 8px;
+	text-align: left;
+}
+
+.measurement-grid,
+.measurement-grid-quick,
+.measurement-grid-full {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 12px;
+}
+
+.measure-field { text-align: center; }
+
+.measure-field .input-fun {
+	text-align: center;
+	font-weight: 700;
+	font-size: 1rem;
+	padding: 10px;
+}
+
+.measure-label {
+	display: block;
+	margin-top: 6px;
+	font-size: 0.7rem;
+	color: var(--ts-text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	font-weight: 600;
+}
+
+/* Buttons */
+.button-group {
+	display: flex;
+	gap: 10px;
+	justify-content: center;
+	padding: 0 28px 28px;
+}
+
+.btn-fun {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 24px;
+	background: var(--thestitch-primary);
+	color: #fff;
+	border: 0;
+	border-radius: var(--thestitch-btn-radius, 10px);
+	font-size: 0.88rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all var(--ts-transition);
+}
+
+.btn-fun:hover {
+	background: var(--thestitch-hover);
+	transform: translateY(-1px);
+	box-shadow: 0 4px 14px rgba(139, 115, 85, 0.22);
+}
+
+.btn-back {
+	background: var(--ts-bg-muted);
+	color: var(--ts-text-secondary);
+}
+
+.btn-back:hover {
+	background: var(--ts-border);
+	color: var(--ts-text);
+	box-shadow: none;
+}
+
+.btn-fun:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+	transform: none !important;
+	box-shadow: none !important;
+}
+
+/* Feedback */
+.form-response {
+	margin: 0 28px 28px;
+	padding: 12px 16px;
+	border-radius: 10px;
+	display: none;
+	font-weight: 500;
+	font-size: 0.88rem;
+}
+
+.form-response.success {
+	display: block;
+	background: #f0fdf4;
+	color: #166534;
+	border: 1px solid #bbf7d0;
+}
+
+.form-response.error {
+	display: block;
+	background: #fef2f2;
+	color: #991b1b;
+	border: 1px solid #fecaca;
+}
+
+.form-response.loading {
+	display: block;
+	background: #eff6ff;
+	color: #1e40af;
+	border: 1px solid #bfdbfe;
+}
+
+.spinner {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	border: 2px solid rgba(0, 0, 0, 0.1);
+	border-top-color: currentColor;
+	border-radius: 50%;
+	animation: tsSpin 0.6s linear infinite;
+	margin-right: 8px;
+	vertical-align: middle;
+}
+
+@keyframes tsSpin { to { transform: rotate(360deg); } }
+
+.form-error-message {
+	color: var(--ts-error);
+	font-size: 0.78rem;
+	margin-top: -2px;
+	margin-bottom: 4px;
+	padding-left: 2px;
+	display: none;
+	font-weight: 500;
+}
+
+.form-error-message.show { display: block; }
+
+.ts-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 0;
+}
+
+.ts-icon svg {
+	width: 1em;
+	height: 1em;
+	display: block;
+}
+
+/* intl-tel-input in bridal form */
+.bridal-form .phone-input-wrap { position: relative; }
+.bridal-form .iti { width: 100%; }
+
+.bridal-form .iti input,
+.bridal-form .iti input.input-fun {
+	width: 100%;
+	min-height: 46px;
+	padding: 12px 14px;
+	border: 1px solid rgba(201, 169, 110, 0.28);
+	background: #ffffff;
+	color: #2f2a22;
+}
+
+.bridal-form .iti__country-list {
+	background: #ffffff;
+	color: #2f2a22;
+	border: 1px solid rgba(201, 169, 110, 0.22);
+	box-shadow: var(--ts-shadow);
+}
+
+.bridal-form .iti__selected-dial-code,
+.bridal-form .iti__selected-country,
+.bridal-form .iti__arrow {
+	color: #5f5348;
+}
+
+/* Admin preview shell safety */
+.ts-preview-shell { animation: none; }
+
+.ts-preview-shell .drop-zone,
+.ts-preview-shell .btn-fun,
+.ts-preview-shell input,
+.ts-preview-shell textarea,
+.ts-preview-shell select,
+.ts-preview-shell label {
+	pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.thestitch-form-container {
+		width: 100%;
+		margin: 1rem auto;
+		border-radius: 12px;
+	}
+
+	.thestitch-form-container h3 {
+		font-size: 1.25rem;
+		padding: 20px 20px 6px;
+	}
+
+	.thestitch-form-container .form-intro { padding: 0 20px; font-size: 0.85rem; }
+
+	.step-track { padding: 4px 20px 20px; }
+
+	.form-step { padding: 0 20px; }
+
+	.step-card {
+		padding: 20px;
+		border-radius: 14px;
+	}
+
+	.node-circle {
+		width: 30px;
+		height: 30px;
+		font-size: 0.75rem;
+	}
+
+	.node-label { font-size: 0.58rem; }
+	.step-line { max-width: 36px; }
+
+	.button-group {
+		padding: 0 20px 20px;
+		flex-direction: column;
+	}
+
+	#step-5 .button-group {
+		position: sticky;
+		bottom: 0;
+		z-index: 8;
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, #ffffff 24%);
+		padding-top: 12px;
+		padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+		margin-top: 8px;
+	}
+
+	.btn-fun {
+		width: 100%;
+		justify-content: center;
+	}
+
+	.measurement-grid,
+	.measurement-grid-quick,
+	.measurement-grid-full,
+	.custom-fit-toggle,
+	.sizing-toggle,
+	.bridal-grid,
+	.bridal-form .date-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.thestitch-form-container.bridal-form-wrap {
+		--thestitch-width: 100%;
+	}
+
+	.bridal-form { padding: 0 20px; }
+	.form-response { margin: 0 20px 20px; }
+	.file-preview { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); }
+}

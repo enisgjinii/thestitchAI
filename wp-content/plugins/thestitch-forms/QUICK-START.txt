@@ -1,0 +1,273 @@
+📱 THE STITCH CUSTOM FORMS - COMPLETE SETUP GUIDE
+================================================
+
+🎯 QUICK REFERENCE - COPY THESE SHORTCODES
+==========================================
+
+Form 1 - Bridal Consultation:
+[bridal_consultation_form]
+
+Form 2 - Dream Outfit Submission:
+[dream_outfit_form]
+
+
+✅ PLUGIN ACTIVATION CHECKLIST
+=============================
+
+□ Log into WordPress Dashboard (yoursite.com/wp-admin)
+□ Go to Plugins → Installed Plugins
+□ Find "The Stitch Custom Forms"
+□ Click "Activate"
+□ You should see "Form Submissions" appear in admin menu
+
+
+📍 WHERE TO ADD FORMS ON YOUR WEBSITE
+====================================
+
+HOMEPAGE:
+- Add [bridal_consultation_form] in hero section or footer
+- Great for capturing leads immediately
+
+BRIDAL PAGE:
+- Add [bridal_consultation_form] prominently
+- Perfect for bridal collection inquiries
+
+CUSTOM DESIGN PAGE:
+- Add [dream_outfit_form] as main CTA
+- Ideal for custom outfit requests with measurements
+
+CONTACT PAGE:
+- Add [bridal_consultation_form] as additional contact option
+- Great alternative contact method
+
+SERVICES/PACKAGES:
+- Add both forms throughout the page
+- At end of each service description
+
+
+🛠️ HOW TO ADD FORMS - STEP BY STEP
+==================================
+
+METHOD 1: GUTENBERG BLOCK EDITOR (Default WordPress)
+----------------------------------------------------
+1. Log in → Pages → Edit a page
+2. Click the + button to add content
+3. Search for "Custom HTML" block
+4. Paste: [bridal_consultation_form]
+5. Click Publish/Update
+✨ Form appears on your page!
+
+
+METHOD 2: ELEMENTOR PAGE BUILDER
+--------------------------------
+1. Open page in Elementor
+2. Find and drag "HTML" widget
+3. Click to select the widget
+4. In right panel, find "HTML Code" field
+5. Paste: [dream_outfit_form]
+6. Click Save & Publish
+✨ Advanced styling with Elementor preserved!
+
+
+METHOD 3: DIVI BUILDER
+---------------------
+1. Open page in Divi
+2. Add a NEW TEXT/CODE MODULE
+3. Paste shortcode: [bridal_consultation_form]
+4. Save & Publish
+✨ Integrates with Divi design!
+
+
+METHOD 4: VISUAL COMPOSER / WPBakery
+-----------------------------------
+1. Edit page
+2. Add "Raw HTML" element
+3. Paste shortcode
+4. Save
+✨ Works seamlessly!
+
+
+METHOD 5: CODE EDITOR (HTML/TEXT)
+--------------------------------
+1. Edit page → Switch to Text/HTML editor
+2. Paste where you want: [bridal_consultation_form]
+3. Save/Update page
+✨ Simple and direct!
+
+
+📊 VIEWING SUBMISSIONS
+======================
+
+WORDPRESS ADMIN:
+1. Log in to WordPress
+2. Look for "Form Submissions" in admin menu
+3. Click to view all submissions
+4. Click any submission to see details
+
+WHAT YOU'LL SEE:
+✓ Customer name and email
+✓ Message/notes
+✓ Preferred dates/times
+✓ Wedding date
+✓ Uploaded images (for Dream Outfit)
+✓ Body measurements (for Dream Outfit)
+✓ Selected size
+
+EMAIL NOTIFICATIONS:
+✓ Automatic email for each submission
+✓ Sent to WordPress admin email
+✓ Contains customer details
+✓ Easy to forward to team
+
+
+🎨 FORM APPEARANCE
+==================
+
+Both forms include:
+✓ Professional, elegant design
+✓ Mobile-responsive layout
+✓ Smooth animations
+✓ Brand colors (brown theme)
+✓ Easy-to-use interface
+✓ Clear error messages
+✓ Loading indicators
+✓ Success confirmations
+
+
+📝 BRIDAL FORM INCLUDES
+======================
+
+□ Full Name
+□ Country Code (+1, +44, etc.)
+□ Mobile Number
+□ Email Address
+□ Message/Inquiry
+□ Preferred Appointment Date
+□ Preferred Appointment Time
+□ Wedding Date
+
+
+🎨 DREAM OUTFIT FORM INCLUDES (3 Steps)
+======================================
+
+STEP 1: DREAM OUTFIT
+□ Upload multiple images of desired outfit
+
+STEP 2: DETAILS & REFERENCES
+□ Upload reference images
+□ Write detailed notes
+□ Upload color/pattern samples
+
+STEP 3: CONTACT & SIZING
+□ Email address
+□ Choose sizing:
+  - Standard (XS-5XL)
+  - Custom measurements (bust, waist, hips)
+
+
+🔒 SECURITY & DATA
+==================
+
+✓ All data stored in WordPress database
+✓ Secure AJAX submission (verified with nonces)
+✓ Sanitized input validation
+✓ File upload restrictions (images only, max 5MB)
+✓ Admin-only access to submissions
+✓ Email backups of all responses
+
+
+⚡ TIPS & BEST PRACTICES
+=======================
+
+TIP 1: PLACEMENT
+- Put Bridal Consultation form above the fold on homepage
+- Dream Outfit form works best on dedicated service page
+- Mobile users: test forms on phone before publishing
+
+TIP 2: MESSAGING
+- Add headline above form: "Book Your Consultation"
+- Add description text: "Tell us about your vision"
+- Include trust signals (testimonials, credentials)
+
+TIP 3: TESTING
+- Fill out both forms before going live
+- Check that submissions appear in admin
+- Verify email notifications are received
+- Test on mobile, tablet, and desktop
+
+TIP 4: CUSTOMIZATION
+- Form styling works with any WordPress theme
+- Customize colors via Appearance → Customize → Additional CSS
+- Match form colors to your branding if needed
+
+TIP 5: FOLLOW-UP
+- Set up clear process for responding to submissions
+- Reply quickly (within 24 hours recommended)
+- Consider email templates for common responses
+
+
+❓ TROUBLESHOOTING
+==================
+
+PROBLEM: Form not showing on page
+SOLUTION: Check shortcode spelling
+- [bridal_consultation_form] ✓ (correct)
+- [Bridal_consultation_form] ✗ (case sensitive)
+- [bridal-consultation-form] ✗ (wrong format)
+
+PROBLEM: "Not submitting" / "Error submitting"
+SOLUTION: 
+- Ensure plugin is Activated
+- Check browser console (F12) for errors
+- Verify site has SSL (https://)
+- Check WordPress AJAX is enabled
+
+PROBLEM: File upload not working
+SOLUTION:
+- Ensure /wp-content/uploads/ has write permissions
+- Check file size (max 5MB)
+- Use supported formats (JPG, PNG, GIF, WebP)
+- Ask hosting provider to check upload limits
+
+PROBLEM: No email notifications
+SOLUTION:
+- Check admin email in Settings → General
+- Check spam folder
+- Verify submission saved in Form Submissions
+- Ask hosting to enable mail functionality
+
+PROBLEM: Forms look broken/ugly
+SOLUTION:
+- Clear browser cache (Ctrl+Shift+Del)
+- Deactivate other form plugins temporarily
+- Check for conflicting styles in theme
+- Contact support if issue persists
+
+
+📞 GETTING HELP
+===============
+
+For issues or customization:
+1. Check INSTALLATION.md for detailed docs
+2. Review troubleshooting section above
+3. Check WordPress plugin compatibility
+4. Contact theme/hosting support if needed
+
+
+🎉 YOU'RE READY!
+===============
+
+Your forms are installed and activated:
+
+□ Shortcode 1: [bridal_consultation_form]
+□ Shortcode 2: [dream_outfit_form]
+
+Next steps:
+1. Add forms to your pages using shortcodes above
+2. Test on desktop and mobile
+3. Share pages with customers
+4. Monitor submissions in admin
+5. Reply promptly to customer inquiries
+
+Let your customers know they can easily book consultations 
+and submit custom outfit requests! 🎀✨

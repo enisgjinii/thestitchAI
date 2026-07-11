@@ -1,0 +1,81 @@
+# WordPress config (contains DB credentials and salts)
+wp-config.php
+wp-config-local.php
+wp-config.*.php
+!wp-config-sample.php
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Uploads & media
+wp-content/uploads/
+
+# Cache & generated files
+wp-content/cache/
+wp-content/litespeed/
+wp-content/advanced-cache.php
+wp-content/object-cache.php
+wp-content/wp-cache-config.php
+wp-content/db.php
+
+# Updates & backups
+wp-content/upgrade/
+wp-content/upgrade-temp-backup/
+wp-content/backup*/
+wp-content/backups/
+wp-content/ai1wm-backups/
+wp-content/plugins/all-in-one-wp-migration/storage/
+*.wpress
+*.sql
+*.sql.gz
+
+# Logs & debug
+*.log
+wp-content/debug.log
+wp-content/uploads/wc-logs/
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editor & IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Node / build tooling
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+build/
+
+# PHP (root-level Composer only)
+/vendor/
+composer.phar
+
+# Apache / server backups
+.htaccess.bk
+*.bak
+
+# Misc
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+.sass-cache/
