@@ -10,9 +10,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('THESTITCH_PAYMENT_EMAILS_VERSION', '1.0.0');
+define('THESTITCH_PAYMENT_EMAILS_VERSION', '1.0.1');
 define('THESTITCH_PAYMENT_EMAILS_PATH', plugin_dir_path(__FILE__));
 define('THESTITCH_PAYMENT_EMAILS_URL', plugin_dir_url(__FILE__));
+define('THESTITCH_PAYMENT_TEST_URL', 'https://example.com/thestitch-nomod-payment-test');
 
 require_once THESTITCH_PAYMENT_EMAILS_PATH . 'includes/class-source-adapter.php';
 require_once THESTITCH_PAYMENT_EMAILS_PATH . 'includes/class-woocommerce-order-adapter.php';
@@ -44,10 +45,30 @@ final class TheStitch_Payment_Emails {
         return 'in';
     }
 
-    public static function validate_payment_url($url) {
+    public static function is_test_mode_enabled($request_flag = false) {
+        if (defined('THESTITCH_PAYMENT_EMAIL_TEST_MODE')) {
+            return (bool) THESTITCH_PAYMENT_EMAIL_TEST_MODE;
+        }
+
+        return (bool) $request_flag;
+    }
+
+    public static function is_test_mode_default_checked() {
+        return get_option('thestitch_payment_email_test_mode', 'yes') === 'yes';
+    }
+
+    public static function get_test_payment_url() {
+        return THESTITCH_PAYMENT_TEST_URL;
+    }
+
+    public static function validate_payment_url($url, $allow_test_fallback = false) {
         $url = trim((string) $url);
         if ($url === '') {
-            return new WP_Error('missing_url', 'Payment URL is required.');
+            if ($allow_test_fallback) {
+                return self::get_test_payment_url();
+            }
+
+            return new WP_Error('missing_url', 'Payment URL is required. Enable Test mode to preview without a NOMOD link.');
         }
 
         $parsed = wp_parse_url($url);

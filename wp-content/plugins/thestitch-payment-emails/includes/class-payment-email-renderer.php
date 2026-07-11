@@ -14,6 +14,7 @@ class TheStitch_Payment_Email_Renderer {
         $currency = esc_html($args['currency']);
         $payment_url = esc_url($args['payment_url']);
         $admin_message = isset($args['admin_message']) ? wp_kses_post(wpautop($args['admin_message'])) : '';
+        $test_mode = !empty($args['test_mode']);
         $preview_3d_url = esc_url($adapter->get_preview_3d_url());
         $fabric_url = esc_url($adapter->get_fabric_pattern_url());
         $design_preview_url = esc_url($adapter->get_design_preview_url());
@@ -48,6 +49,9 @@ class TheStitch_Payment_Email_Renderer {
 
         $html = self::render($adapter, $args);
         $subject = self::build_subject($adapter, $args['currency'], $args['final_price']);
+        if (!empty($args['test_mode'])) {
+            $subject = '[TEST] ' . $subject;
+        }
         $headers = ['Content-Type: text/html; charset=UTF-8'];
 
         $sent = wp_mail($recipient, $subject, $html, $headers);

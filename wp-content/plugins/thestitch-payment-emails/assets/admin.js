@@ -13,6 +13,7 @@
       currency: $('#ts_payment_currency', $panel).val(),
       payment_url: $('#ts_payment_url', $panel).val(),
       admin_message: $('#ts_payment_message', $panel).val(),
+      test_mode: $('#ts_payment_test_mode', $panel).is(':checked') ? 1 : 0,
     };
   }
 
@@ -59,6 +60,12 @@
     var payload = collectPayload($panel);
     payload.action = 'thestitch_payment_email_send';
 
+    if (payload.test_mode && !payload.payment_url) {
+      if (!window.confirm('Test mode is on. The email will use a placeholder payment link that does not accept real payments. Continue?')) {
+        return;
+      }
+    }
+
     var sendCountText = $('.ts-payment-status strong:contains("Send count")', $panel).length;
     if (sendCountText && !payload.confirm_resend) {
       var existingCount = parseInt($('.ts-payment-status', $panel).text().match(/Send count:\s*(\d+)/)?.[1] || '0', 10);
@@ -93,7 +100,11 @@
         }
 
         updateStatus($panel, response.data);
-        showFeedback($panel, response.data.message, 'success');
+        var successMessage = response.data.message;
+        if (response.data.test_mode) {
+          successMessage += ' (Test mode — placeholder payment link used.)';
+        }
+        showFeedback($panel, successMessage, 'success');
       })
       .fail(function () {
         showFeedback($panel, 'Send request failed.', 'error');

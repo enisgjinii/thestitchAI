@@ -22,6 +22,16 @@
                     </td>
                 </tr>
 
+                <?php if (!empty($test_mode)) : ?>
+                <tr>
+                    <td style="padding:0 28px 16px;">
+                        <div style="background:#fff4e5;border:1px solid #f0c987;border-radius:8px;padding:14px 16px;color:#7a4d00;font-size:13px;line-height:1.6;">
+                            <strong>Test email.</strong> The Pay Securely button uses a placeholder link only. Replace it with the real NOMOD payment URL before sending to customers.
+                        </div>
+                    </td>
+                </tr>
+                <?php endif; ?>
+
                 <tr>
                     <td style="padding:28px;">
                         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#faf7f1;border:1px solid #ece3d4;border-radius:12px;">

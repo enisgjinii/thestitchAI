@@ -141,6 +141,14 @@ class TheStitch_Payment_Email_Admin {
                 <input type="url" id="ts_payment_url" class="widefat" value="<?php echo esc_attr($payment_url); ?>" placeholder="https://...">
             </p>
 
+            <p class="ts-payment-test-mode">
+                <label>
+                    <input type="checkbox" id="ts_payment_test_mode" value="1" <?php checked(TheStitch_Payment_Emails::is_test_mode_default_checked()); ?>>
+                    <strong>Test mode</strong> — preview/send without a real NOMOD link
+                </label>
+                <span class="description" style="display:block;margin-top:6px;">Uses a placeholder Pay button link. Turn off before sending live customer payment emails.</span>
+            </p>
+
             <p>
                 <label for="ts_payment_message"><strong>Optional message</strong></label>
                 <textarea id="ts_payment_message" class="widefat" rows="4"><?php echo esc_textarea($admin_message); ?></textarea>
@@ -198,7 +206,8 @@ class TheStitch_Payment_Email_Admin {
             return new WP_Error('invalid_currency', 'Selected currency is not allowed.');
         }
 
-        $payment_url = TheStitch_Payment_Emails::validate_payment_url($payload['payment_url'] ?? '');
+        $test_mode = TheStitch_Payment_Emails::is_test_mode_enabled(!empty($payload['test_mode']));
+        $payment_url = TheStitch_Payment_Emails::validate_payment_url($payload['payment_url'] ?? '', $test_mode);
         if (is_wp_error($payment_url)) {
             return $payment_url;
         }
@@ -211,6 +220,7 @@ class TheStitch_Payment_Email_Admin {
             'currency' => $currency,
             'payment_url' => $payment_url,
             'admin_message' => $admin_message,
+            'test_mode' => $test_mode,
         ];
     }
 
@@ -229,6 +239,7 @@ class TheStitch_Payment_Email_Admin {
             'currency' => $validated['currency'],
             'payment_url' => $validated['payment_url'],
             'admin_message' => $validated['admin_message'],
+            'test_mode' => $validated['test_mode'],
         ]);
 
         wp_send_json_success(['html' => $html]);
@@ -258,7 +269,7 @@ class TheStitch_Payment_Email_Admin {
         $adapter->save_payment_fields([
             '_thestitch_final_price' => (string) $validated['final_price'],
             '_thestitch_currency' => $validated['currency'],
-            '_thestitch_nomod_payment_url' => $validated['payment_url'],
+            '_thestitch_nomod_payment_url' => $validated['test_mode'] ? '' : $validated['payment_url'],
             '_thestitch_payment_email_message' => $validated['admin_message'],
         ]);
 
@@ -267,6 +278,7 @@ class TheStitch_Payment_Email_Admin {
             'currency' => $validated['currency'],
             'payment_url' => $validated['payment_url'],
             'admin_message' => $validated['admin_message'],
+            'test_mode' => $validated['test_mode'],
         ]);
 
         if (is_wp_error($result)) {
@@ -288,6 +300,7 @@ class TheStitch_Payment_Email_Admin {
             'sent_at' => $sent_at,
             'sent_by' => $sent_by,
             'send_count' => $new_count,
+            'test_mode' => $validated['test_mode'],
         ]);
     }
 }
