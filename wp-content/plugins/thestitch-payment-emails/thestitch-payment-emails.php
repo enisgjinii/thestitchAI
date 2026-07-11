@@ -10,11 +10,12 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('THESTITCH_PAYMENT_EMAILS_VERSION', '1.0.1');
+define('THESTITCH_PAYMENT_EMAILS_VERSION', '1.0.2');
 define('THESTITCH_PAYMENT_EMAILS_PATH', plugin_dir_path(__FILE__));
 define('THESTITCH_PAYMENT_EMAILS_URL', plugin_dir_url(__FILE__));
 define('THESTITCH_PAYMENT_TEST_URL', 'https://example.com/thestitch-nomod-payment-test');
 
+require_once THESTITCH_PAYMENT_EMAILS_PATH . 'includes/class-payment-email-brand.php';
 require_once THESTITCH_PAYMENT_EMAILS_PATH . 'includes/class-source-adapter.php';
 require_once THESTITCH_PAYMENT_EMAILS_PATH . 'includes/class-woocommerce-order-adapter.php';
 require_once THESTITCH_PAYMENT_EMAILS_PATH . 'includes/class-recreate-submission-adapter.php';

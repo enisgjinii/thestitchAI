@@ -520,7 +520,115 @@
     letter-spacing: .02em;
 }
 .ts-type-badge--bridal   { background: #fce7f3; color: #be185d; }
-.ts-type-badge--recreate { background: #dbeafe; color: #1d4ed8; }
+.ts-type-badge--recreate { background: #faf0df; color: #7a5b24; }
+.ts-type-badge--create   { background: #f3ede5; color: #6d5a47; }
+
+/* Submission detail meta box */
+.ts-submission-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+}
+.ts-submission-card {
+    background: #fff;
+    border: 1px solid var(--ts-border);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: var(--ts-shadow);
+}
+.ts-submission-card h3 {
+    margin: 0 0 12px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ts-dark);
+}
+.ts-submission-list {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+}
+.ts-submission-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 10px;
+    align-items: start;
+}
+.ts-submission-row dt {
+    font-weight: 600;
+    color: var(--ts-muted);
+    font-size: 12px;
+}
+.ts-submission-row dd {
+    margin: 0;
+    color: var(--ts-text);
+    font-size: 13px;
+}
+.ts-note-box {
+    white-space: pre-line;
+    line-height: 1.7;
+    color: var(--ts-text);
+    background: #faf8f5;
+    border: 1px solid var(--ts-border);
+    border-radius: 12px;
+    padding: 14px;
+}
+.ts-upload-groups { display: grid; gap: 14px; }
+.ts-upload-group {
+    border: 1px solid var(--ts-border);
+    border-radius: 12px;
+    padding: 14px;
+    background: #fcfaf7;
+}
+.ts-upload-group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.ts-upload-group-title { font-weight: 700; color: var(--ts-dark); }
+.ts-upload-count { font-size: 12px; color: var(--ts-muted); }
+.ts-upload-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+}
+.ts-upload-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-decoration: none;
+}
+.ts-upload-thumb {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--ts-border);
+    background: #fff;
+}
+.ts-upload-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.ts-upload-name {
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--ts-muted);
+    word-break: break-word;
+}
+.ts-muted { color: var(--ts-muted); }
+.ts-sub-table td:nth-child(4) {
+    font-size: 12px;
+    color: var(--ts-muted);
+    font-weight: 600;
+}
+
+@media (max-width: 782px) {
+    .ts-submission-row { grid-template-columns: 1fr; }
+}
 
 /* Status badges */
 .ts-status-badge {

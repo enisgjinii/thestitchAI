@@ -54,6 +54,16 @@ class TheStitch_Payment_Email_Admin {
             [],
             THESTITCH_PAYMENT_EMAILS_VERSION
         );
+
+        if (defined('THESTITCH_PAYMENT_EMAILS_PATH') && file_exists(WP_PLUGIN_DIR . '/thestitch-forms/assets/css/admin.css')) {
+            wp_enqueue_style(
+                'thestitch-admin-css-bridge',
+                plugins_url('thestitch-forms/assets/css/admin.css'),
+                [],
+                THESTITCH_PAYMENT_EMAILS_VERSION
+            );
+        }
+
         wp_enqueue_script(
             'thestitch-payment-emails-admin',
             THESTITCH_PAYMENT_EMAILS_URL . 'assets/admin.js',
@@ -118,41 +128,50 @@ class TheStitch_Payment_Email_Admin {
         $send_count = (int) $adapter->get_payment_meta('_thestitch_payment_email_send_count', 0);
 
         wp_nonce_field('thestitch_payment_email_panel', 'thestitch_payment_email_panel_nonce');
+        $type_label = $adapter->get_order_type_label();
+        $type_class = $type_label === 'Create' ? 'create' : 'recreate';
         ?>
         <div class="ts-payment-panel" data-source-type="<?php echo esc_attr($context['source_type']); ?>" data-source-id="<?php echo esc_attr((string) $context['source_id']); ?>">
-            <p><strong>Customer email:</strong><br><?php echo esc_html($adapter->get_customer_email() ?: 'Not available'); ?></p>
+            <div class="ts-payment-panel__header">
+                <div class="ts-payment-panel__bridge">
+                    <span class="ts-payment-bridge-label">Request flow</span>
+                    <span class="ts-payment-type-badge ts-payment-type-badge--<?php echo esc_attr($type_class); ?>"><?php echo esc_html($type_label); ?></span>
+                </div>
+                <p class="ts-payment-panel__title">Customer email</p>
+                <p class="ts-payment-panel__email"><?php echo esc_html($adapter->get_customer_email() ?: 'Not available'); ?></p>
+            </div>
 
-            <p>
-                <label for="ts_payment_final_price"><strong>Final price</strong></label>
+            <div class="ts-payment-field">
+                <label for="ts_payment_final_price">Final price</label>
                 <input type="number" step="0.01" min="0.01" id="ts_payment_final_price" class="widefat" value="<?php echo esc_attr($final_price); ?>">
-            </p>
+            </div>
 
-            <p>
-                <label for="ts_payment_currency"><strong>Currency</strong></label>
+            <div class="ts-payment-field">
+                <label for="ts_payment_currency">Currency</label>
                 <select id="ts_payment_currency" class="widefat">
                     <?php foreach (TheStitch_Payment_Emails::allowed_currencies() as $allowed_currency) : ?>
                         <option value="<?php echo esc_attr($allowed_currency); ?>" <?php selected($currency, $allowed_currency); ?>><?php echo esc_html($allowed_currency); ?></option>
                     <?php endforeach; ?>
                 </select>
-            </p>
+            </div>
 
-            <p>
-                <label for="ts_payment_url"><strong>NOMOD payment URL</strong></label>
+            <div class="ts-payment-field">
+                <label for="ts_payment_url">NOMOD payment URL</label>
                 <input type="url" id="ts_payment_url" class="widefat" value="<?php echo esc_attr($payment_url); ?>" placeholder="https://...">
-            </p>
+            </div>
 
-            <p class="ts-payment-test-mode">
+            <div class="ts-payment-test-mode">
                 <label>
                     <input type="checkbox" id="ts_payment_test_mode" value="1" <?php checked(TheStitch_Payment_Emails::is_test_mode_default_checked()); ?>>
-                    <strong>Test mode</strong> — preview/send without a real NOMOD link
+                    <span><strong>Test mode</strong> — preview/send without a real NOMOD link</span>
                 </label>
-                <span class="description" style="display:block;margin-top:6px;">Uses a placeholder Pay button link. Turn off before sending live customer payment emails.</span>
-            </p>
+                <span class="description">Uses a placeholder Pay button link. Turn off before sending live customer payment emails.</span>
+            </div>
 
-            <p>
-                <label for="ts_payment_message"><strong>Optional message</strong></label>
+            <div class="ts-payment-field">
+                <label for="ts_payment_message">Optional message</label>
                 <textarea id="ts_payment_message" class="widefat" rows="4"><?php echo esc_textarea($admin_message); ?></textarea>
-            </p>
+            </div>
 
             <div class="ts-payment-actions">
                 <button type="button" class="button button-secondary ts-payment-preview">Preview Email</button>
@@ -165,13 +184,13 @@ class TheStitch_Payment_Email_Admin {
                     <p><strong>Sent by:</strong> <?php echo esc_html($sent_by ?: 'Unknown'); ?></p>
                     <p><strong>Send count:</strong> <?php echo esc_html((string) $send_count); ?></p>
                 <?php else : ?>
-                    <p class="description">No payment email sent yet.</p>
+                    <p>No payment email sent yet.</p>
                 <?php endif; ?>
             </div>
 
             <div class="ts-payment-feedback" aria-live="polite"></div>
             <div class="ts-payment-preview-wrap" style="display:none;">
-                <iframe class="ts-payment-preview-frame" title="Payment email preview" style="width:100%;min-height:480px;border:1px solid #ddd;border-radius:8px;background:#fff;"></iframe>
+                <iframe class="ts-payment-preview-frame" title="Payment email preview"></iframe>
             </div>
         </div>
         <?php

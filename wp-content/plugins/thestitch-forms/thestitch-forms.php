@@ -270,7 +270,23 @@ class TheStitch_Forms {
             'form_submission_page_thestitch-forms-help',
         ];
 
-        if (!in_array($hook, $allowed_hooks, true) && strpos($hook, 'thestitch-forms') === false) {
+        $load_assets = in_array($hook, $allowed_hooks, true) || strpos($hook, 'thestitch-forms') !== false;
+
+        if (!$load_assets && in_array($hook, ['post.php', 'post-new.php'], true)) {
+            $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+            if ($screen && $screen->post_type === 'form_submission') {
+                $load_assets = true;
+            }
+        }
+
+        if (!$load_assets && function_exists('wc_get_page_screen_id')) {
+            $order_screen = wc_get_page_screen_id('shop-order');
+            if ($hook === $order_screen || $hook === 'woocommerce_page_wc-orders') {
+                $load_assets = true;
+            }
+        }
+
+        if (!$load_assets) {
             return;
         }
         wp_enqueue_media();
@@ -1680,33 +1696,10 @@ class TheStitch_Forms {
             }
         }
 
-        echo '<style>
-            .ts-submission-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:8px}
-            .ts-submission-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:16px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
-            .ts-submission-card h3{margin:0 0 12px;font-size:14px;font-weight:700;color:#111827}
-            .ts-submission-list{display:grid;gap:10px;margin:0}
-            .ts-submission-row{display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:start}
-            .ts-submission-row dt{font-weight:600;color:#374151}
-            .ts-submission-row dd{margin:0;color:#111827}
-            .ts-note-box{white-space:pre-line;line-height:1.7;color:#111827;background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;padding:14px}
-            .ts-upload-groups{display:grid;gap:14px}
-            .ts-upload-group{border:1px solid #e5e7eb;border-radius:12px;padding:14px;background:#fcfcfd}
-            .ts-upload-group-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-            .ts-upload-group-title{font-weight:700;color:#111827}
-            .ts-upload-count{font-size:12px;color:#6b7280}
-            .ts-upload-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
-            .ts-upload-item{display:flex;flex-direction:column;gap:6px;text-decoration:none}
-            .ts-upload-thumb{width:100%;aspect-ratio:1;border-radius:10px;overflow:hidden;border:1px solid #e5e7eb;background:#fff}
-            .ts-upload-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-            .ts-upload-name{font-size:12px;line-height:1.4;color:#374151;word-break:break-word}
-            .ts-muted{color:#6b7280}
-            @media (max-width:782px){.ts-submission-row{grid-template-columns:1fr}}
-        </style>';
-
         echo '<div class="ts-submission-grid">';
 
         echo '<div class="ts-submission-card"><h3>Overview</h3><dl class="ts-submission-list">';
-        echo '<div class="ts-submission-row"><dt>Type</dt><dd>' . esc_html($is_dream_outfit ? 'Recreate Submission' : 'Bridal Consultation') . '</dd></div>';
+        echo '<div class="ts-submission-row"><dt>Type</dt><dd><span class="ts-type-badge ts-type-badge--' . ($is_dream_outfit ? 'recreate' : 'bridal') . '">' . esc_html($is_dream_outfit ? 'Recreate' : 'Bridal') . '</span></dd></div>';
         echo '<div class="ts-submission-row"><dt>Submitted</dt><dd>' . esc_html($submitted_at) . '</dd></div>';
         if (!$is_dream_outfit) {
             echo '<div class="ts-submission-row"><dt>Client</dt><dd>' . esc_html($full_name ?: '-') . '</dd></div>';
@@ -1917,8 +1910,8 @@ class TheStitch_Forms {
             <div class="form-header-art">
                 <span class="header-icon"><?php echo $this->get_icon_markup('sparkles', 'hero-icon'); ?></span>
             </div>
-            <h3><?php echo esc_html($labels['dream_title'] ?? 'Recreate Your Dream Look'); ?></h3>
-            <p class="form-intro">Drop your inspiration, add your vibe, and we'll stitch it into reality.</p>
+            <h3><?php echo esc_html($labels['dream_title'] ?? 'Remake the Magic'); ?></h3>
+            <p class="form-intro">Loved a look? Upload your inspiration, references, and sizing — we’ll tailor it perfectly to you.</p>
 
             <div class="step-track">
                 <div class="step-node active" data-step="1">
