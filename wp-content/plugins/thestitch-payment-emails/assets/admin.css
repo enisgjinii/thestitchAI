@@ -1,0 +1,22 @@
+.ts-payment-panel .ts-payment-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.ts-payment-panel .ts-payment-feedback {
+  margin-top: 10px;
+}
+
+.ts-payment-panel .ts-payment-feedback.is-error {
+  color: #b91c1c;
+}
+
+.ts-payment-panel .ts-payment-feedback.is-success {
+  color: #15803d;
+}
+
+.ts-payment-panel .ts-payment-preview-wrap {
+  margin-top: 12px;
+}

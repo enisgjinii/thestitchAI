@@ -375,6 +375,37 @@ class TheStitch_Forms {
         return '<span class="ts-icon ' . esc_attr($class) . '" aria-hidden="true">' . $svg . '</span>';
     }
 
+    private function sanitize_referral_code($input) {
+        if ($input === null || $input === '') {
+            return '';
+        }
+
+        $trimmed = trim((string) $input);
+        if ($trimmed === '') {
+            return '';
+        }
+
+        $sanitized = preg_replace('/[^a-zA-Z0-9_-]/', '', $trimmed);
+        if ($sanitized === '') {
+            return '';
+        }
+
+        return substr($sanitized, 0, 64);
+    }
+
+    private function format_measurement_unit_label($unit) {
+        if ($unit === 'cm') {
+            return 'cm';
+        }
+
+        if ($unit === 'inches' || $unit === 'in') {
+            return 'in';
+        }
+
+        // Legacy fallback for submissions saved before measurement_unit was stored.
+        return 'in';
+    }
+
     private function get_upload_field_label($field) {
         $labels = [
             'dream_images' => 'Outfit Images',
@@ -462,14 +493,14 @@ class TheStitch_Forms {
         $labels = $this->get_measurement_field_labels();
         $lines = [];
         $lines[] = 'Custom Fit Type: ' . ($fit_type === 'full-fit' ? 'Full Fit' : 'Quick Fit');
-        $lines[] = 'Measurement Unit: ' . $unit;
+        $lines[] = 'Measurement Unit: ' . $this->format_measurement_unit_label($unit);
 
         foreach ($measurements as $key => $value) {
             $label = isset($labels[$key]) ? $labels[$key] : ucwords(str_replace('_', ' ', $key));
             if ($key === 'preferred_fit') {
                 $lines[] = $label . ': ' . ucfirst($value);
             } else {
-                $lines[] = $label . ': ' . $value . ' ' . $unit;
+                $lines[] = $label . ': ' . $value . ' ' . $this->format_measurement_unit_label($unit);
             }
         }
 
@@ -1537,6 +1568,7 @@ class TheStitch_Forms {
         $new_columns['title'] = 'Subject';
         $new_columns['submission_type'] = 'Type';
         $new_columns['email'] = 'Email';
+        $new_columns['referral_code'] = 'Referral Code';
         $new_columns['phone']     = 'Phone';
         $new_columns['ts_status'] = 'Status';
         $new_columns['date']      = $columns['date'];
@@ -1562,6 +1594,10 @@ class TheStitch_Forms {
                 } else {
                     echo '-';
                 }
+                break;
+            case 'referral_code':
+                $referral_code = get_post_meta($post_id, 'referral_code', true);
+                echo $referral_code ? esc_html($referral_code) : '<span class="ts-muted">Not provided</span>';
                 break;
             case 'phone':
                 echo esc_html(get_post_meta($post_id, 'phone', true) ?: '-');
@@ -1615,6 +1651,8 @@ class TheStitch_Forms {
         $upload_count_outfit = get_post_meta($post->ID, 'upload_count_outfit', true);
         $upload_count_reference = get_post_meta($post->ID, 'upload_count_reference', true);
         $upload_count_color = get_post_meta($post->ID, 'upload_count_color', true);
+        $referral_code = get_post_meta($post->ID, 'referral_code', true);
+        $measurement_unit = get_post_meta($post->ID, 'measurement_unit', true);
 
         $is_dream_outfit = ($submission_type === 'recreate') || !empty($sizing_type);
         $submitted_at = get_the_date('M j, Y g:i a', $post);
@@ -1674,6 +1712,7 @@ class TheStitch_Forms {
             echo '<div class="ts-submission-row"><dt>Client</dt><dd>' . esc_html($full_name ?: '-') . '</dd></div>';
         }
         echo '<div class="ts-submission-row"><dt>Email</dt><dd>' . ($email ? '<a href="mailto:' . esc_attr($email) . '">' . esc_html($email) . '</a>' : '-') . '</dd></div>';
+        echo '<div class="ts-submission-row"><dt>Referral Code</dt><dd>' . esc_html($referral_code ?: 'Not provided') . '</dd></div>';
         echo '</dl></div>';
 
         if (!$is_dream_outfit) {
@@ -1698,6 +1737,8 @@ class TheStitch_Forms {
                 $fit_type = $custom_fit_type && in_array($custom_fit_type, ['quick-fit', 'full-fit'], true) ? $custom_fit_type : 'quick-fit';
                 $fit_title = $fit_type === 'full-fit' ? 'Full Fit' : 'Quick Fit';
                 echo '<div class="ts-submission-row"><dt>Custom Fit Type</dt><dd>' . esc_html($fit_title) . '</dd></div>';
+                $unit_label = $this->format_measurement_unit_label($measurement_unit);
+                echo '<div class="ts-submission-row"><dt>Measurement Unit</dt><dd>' . esc_html($unit_label) . '</dd></div>';
 
                 $measurement_fields = $this->get_measurement_fields_by_fit($fit_type);
                 foreach ($measurement_fields as $field_key) {
@@ -1707,7 +1748,9 @@ class TheStitch_Forms {
                     }
 
                     $label = isset($labels[$field_key]) ? $labels[$field_key] : ucwords(str_replace('_', ' ', $field_key));
-                    $display_value = $field_key === 'preferred_fit' ? ucfirst((string) $value) : ($value . ' in');
+                    $display_value = $field_key === 'preferred_fit'
+                        ? ucfirst((string) $value)
+                        : ((string) $value . ' ' . $unit_label);
                     echo '<div class="ts-submission-row"><dt>' . esc_html($label) . '</dt><dd>' . esc_html($display_value) . '</dd></div>';
                 }
             }
@@ -2026,6 +2069,10 @@ class TheStitch_Forms {
                         <label class="field-label">Email Address</label>
                         <input type="email" name="email" placeholder="your@email.com" required class="input-fun">
 
+                        <label class="field-label">Referral Code <span class="ts-optional">(Optional)</span></label>
+                        <input type="text" name="referral_code" placeholder="Enter referral code if you have one" maxlength="64" autocomplete="off" class="input-fun">
+                        <p class="step-helper">Letters, numbers, hyphens, and underscores only. Max 64 characters.</p>
+
                         <label class="field-label">How do you take your size?</label>
                         <div class="sizing-toggle">
                             <label class="toggle-option">
@@ -2120,7 +2167,6 @@ class TheStitch_Forms {
                                     </span>
                                 </label>
                             </div>
-                            <input type="hidden" name="measurement_unit_hidden" value="inches">
                             <label class="field-label">Select Custom Fit Type</label>
                             <div class="custom-fit-toggle">
                                 <label class="toggle-option">
@@ -2295,6 +2341,9 @@ class TheStitch_Forms {
         $sizing_type = sanitize_text_field(wp_unslash($_POST['sizing_type']));
         $notes = isset($_POST['notes']) ? sanitize_textarea_field(wp_unslash($_POST['notes'])) : '';
         $measurement_unit = (isset($_POST['measurement_unit']) && $_POST['measurement_unit'] === 'cm') ? 'cm' : 'inches';
+        $referral_code = isset($_POST['referral_code'])
+            ? $this->sanitize_referral_code(wp_unslash($_POST['referral_code']))
+            : '';
 
         if (!is_email($email)) {
             wp_send_json_error('Please provide a valid email address.');
@@ -2394,6 +2443,7 @@ class TheStitch_Forms {
 
             update_post_meta($post_id, 'submission_type', 'recreate');
             update_post_meta($post_id, 'email', $email);
+            update_post_meta($post_id, 'referral_code', $referral_code);
             update_post_meta($post_id, 'sizing_type', $sizing_type);
             update_post_meta($post_id, 'notes', $notes);
             update_post_meta($post_id, 'uploaded_files', $uploaded_files);
@@ -2421,7 +2471,11 @@ class TheStitch_Forms {
                 ? $this->build_measurements_email_summary($custom_fit_type, $custom_measurements, $measurement_unit)
                 : 'Standard Size: ' . sanitize_text_field(wp_unslash($_POST['standard_size']));
 
-            $body = "Email: $email\nSizing Type: $sizing_type\n$measurement_summary\nNotes: $notes\nTotal Files Uploaded: " . count($uploaded_files);
+            $body = "Email: $email\n";
+            if ($referral_code !== '') {
+                $body .= "Referral Code: $referral_code\n";
+            }
+            $body .= "Sizing Type: $sizing_type\n$measurement_summary\nNotes: $notes\nTotal Files Uploaded: " . count($uploaded_files);
             wp_mail($to, $subject, $body);
 
             // Optional customer confirmation
@@ -2440,7 +2494,8 @@ class TheStitch_Forms {
                     'details' => [
                         'Sizing Type' => ucfirst($sizing_type),
                         'Selected Fit / Size' => $size_summary,
-                        'Measurement Unit' => $sizing_type === 'custom' ? $measurement_unit : '',
+                        'Measurement Unit' => $sizing_type === 'custom' ? $this->format_measurement_unit_label($measurement_unit) : '',
+                        'Referral Code' => $referral_code !== '' ? $referral_code : '',
                         'Uploaded Images' => count($uploaded_files),
                     ],
                 ]);
@@ -2655,7 +2710,8 @@ class TheStitch_Forms {
             $submissions = array_values( array_filter( $submissions, function ( $sub ) use ( $sq ) {
                 $n = strtolower( (string) get_post_meta( $sub->ID, 'full_name', true ) );
                 $e = strtolower( (string) get_post_meta( $sub->ID, 'email', true ) );
-                return strpos( $n, $sq ) !== false || strpos( $e, $sq ) !== false;
+                $r = strtolower( (string) get_post_meta( $sub->ID, 'referral_code', true ) );
+                return strpos( $n, $sq ) !== false || strpos( $e, $sq ) !== false || strpos( $r, $sq ) !== false;
             } ) );
         }
 
@@ -2740,7 +2796,7 @@ class TheStitch_Forms {
                 <?php if ( $type_filter !== 'all' ) : ?>
                 <input type="hidden" name="ts_type" value="<?php echo esc_attr( $type_filter ); ?>">
                 <?php endif; ?>
-                <input type="text" name="ts_search" class="ts-search-input" placeholder="Search name or email…"
+                <input type="text" name="ts_search" class="ts-search-input" placeholder="Search name, email, or referral code…"
                        value="<?php echo esc_attr( $search_query ); ?>">
                 <button type="submit" class="ts-btn ts-btn-secondary">Search</button>
                 <?php if ( ! empty( $search_query ) ) : ?>
@@ -2773,6 +2829,7 @@ class TheStitch_Forms {
                             <th class="ts-sub-table__check"><input type="checkbox" class="ts-select-all-submissions" aria-label="Select all submissions"></th>
                             <th>Type</th>
                             <th>Name / Email</th>
+                            <th>Referral Code</th>
                             <th>Phone</th>
                             <th>Date</th>
                             <th>Status</th>
@@ -2783,6 +2840,7 @@ class TheStitch_Forms {
                     <?php foreach ( $submissions as $sub ) :
                         $sub_email  = get_post_meta( $sub->ID, 'email', true );
                         $sub_name   = get_post_meta( $sub->ID, 'full_name', true );
+                        $sub_referral = get_post_meta( $sub->ID, 'referral_code', true );
                         $sub_phone  = get_post_meta( $sub->ID, 'phone', true );
                         $sub_type   = get_post_meta( $sub->ID, 'submission_type', true );
                         $sub_status = get_post_meta( $sub->ID, 'ts_status', true ) ?: 'new';
@@ -2806,6 +2864,7 @@ class TheStitch_Forms {
                             <div class="ts-sub-email"><?php echo esc_html( $sub_email ); ?></div>
                             <?php endif; ?>
                         </td>
+                        <td><?php echo esc_html( $sub_referral ?: '—' ); ?></td>
                         <td><?php echo esc_html( $sub_phone ?: '—' ); ?></td>
                         <td><?php echo esc_html( get_the_date( 'M j, Y', $sub->ID ) ); ?></td>
                         <td>
@@ -2863,8 +2922,8 @@ class TheStitch_Forms {
             'ID', 'Type', 'Status', 'Date', 'Full Name', 'Email', 'Phone',
             'Country Code', 'Country ISO', 'Mobile Number',
             'Preferred Date', 'Preferred Time', 'Wedding Date', 'Message',
-            'Sizing Type', 'Standard Size', 'Custom Fit Type',
-            'Bust', 'Waist', 'Hips', 'Notes',
+            'Sizing Type', 'Standard Size', 'Custom Fit Type', 'Measurement Unit',
+            'Bust', 'Waist', 'Hips', 'Referral Code', 'Notes',
             'Total Files', 'Outfit Files', 'Reference Files', 'Color Files',
         ] );
 
@@ -2890,9 +2949,11 @@ class TheStitch_Forms {
                 $m( 'sizing_type' ),
                 $m( 'standard_size' ),
                 $m( 'custom_fit_type' ),
+                $m( 'measurement_unit' ),
                 $m( 'bust' ),
                 $m( 'waist' ),
                 $m( 'hips' ),
+                $m( 'referral_code' ),
                 $m( 'notes' ),
                 $m( 'upload_count_total' ),
                 $m( 'upload_count_outfit' ),
