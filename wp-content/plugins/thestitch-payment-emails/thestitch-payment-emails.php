@@ -55,7 +55,7 @@ final class TheStitch_Payment_Emails {
     }
 
     public static function is_test_mode_default_checked() {
-        return get_option('thestitch_payment_email_test_mode', 'yes') === 'yes';
+        return get_option('thestitch_payment_email_test_mode', 'no') === 'yes';
     }
 
     public static function get_test_payment_url() {
