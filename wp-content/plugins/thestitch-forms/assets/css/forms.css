@@ -551,25 +551,80 @@
 .size-chart-panel {
 	margin-top: 12px;
 	border: 1px solid var(--ts-border-light);
-	background: var(--ts-bg-soft);
+	background: #fafafa;
 	border-radius: var(--ts-radius);
 	padding: 12px;
+	color: #111111;
 }
 
-.size-chart-table-wrap { overflow-x: auto; }
+.size-chart-note {
+	margin: 0 0 10px;
+	font-size: 0.78rem;
+	line-height: 1.55;
+	color: #444444;
+}
+
+.size-chart-note strong {
+	color: #111111;
+}
+
+.size-chart-table-wrap {
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	border: 1px solid #e5e5e5;
+	border-radius: 8px;
+	background: #ffffff;
+}
 
 .size-chart-table {
 	width: 100%;
+	min-width: 640px;
 	border-collapse: collapse;
 	font-size: 0.72rem;
-	background: #fff;
+	background: #ffffff;
+	color: #111111;
+}
+
+.size-chart-table thead th {
+	background: #111111;
+	color: #ffffff !important;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	font-size: 0.68rem;
+	white-space: nowrap;
+	position: sticky;
+	top: 0;
+	z-index: 1;
 }
 
 .size-chart-table th,
 .size-chart-table td {
-	border-bottom: 1px solid var(--ts-border-light);
-	padding: 8px;
+	border-bottom: 1px solid #e5e5e5;
+	padding: 8px 10px;
 	text-align: left;
+	color: #111111 !important;
+}
+
+.size-chart-table tbody tr:nth-child(even) {
+	background: #f7f7f7;
+}
+
+.size-chart-table tbody tr:hover {
+	background: #f0f0f0;
+}
+
+.size-chart-image-wrap {
+	border: 1px solid #e5e5e5;
+	border-radius: 8px;
+	overflow: hidden;
+	background: #ffffff;
+}
+
+.size-chart-image {
+	display: block;
+	width: 100%;
+	height: auto;
 }
 
 .measurement-grid,
@@ -930,4 +985,137 @@
 .recreate-form-wrap .chip input:checked + span {
 	background: #111111 !important;
 	color: #ffffff !important;
+}
+
+/* Size chart — force readable contrast (beats theme/Elementor overrides) */
+#RecreateForm.recreate-form-wrap .size-chart-panel,
+.recreate-form-wrap .size-chart-panel,
+.thestitch-form-container .size-chart-panel {
+	background: #fafafa !important;
+	border-color: #e5e5e5 !important;
+	color: #111111 !important;
+}
+
+#RecreateForm.recreate-form-wrap .size-chart-note,
+.recreate-form-wrap .size-chart-note,
+.thestitch-form-container .size-chart-note {
+	color: #444444 !important;
+}
+
+#RecreateForm.recreate-form-wrap .size-chart-note strong,
+.recreate-form-wrap .size-chart-note strong,
+.thestitch-form-container .size-chart-note strong {
+	color: #111111 !important;
+}
+
+#RecreateForm.recreate-form-wrap .size-chart-table-wrap,
+.recreate-form-wrap .size-chart-table-wrap,
+.thestitch-form-container .size-chart-table-wrap {
+	background: #ffffff !important;
+	border-color: #e5e5e5 !important;
+}
+
+#RecreateForm.recreate-form-wrap .size-chart-table,
+.recreate-form-wrap .size-chart-table,
+.thestitch-form-container .size-chart-table {
+	background: #ffffff !important;
+	color: #111111 !important;
+}
+
+#RecreateForm.recreate-form-wrap .size-chart-table thead th,
+.recreate-form-wrap .size-chart-table thead th,
+.thestitch-form-container .size-chart-table thead th {
+	background: #111111 !important;
+	color: #ffffff !important;
+}
+
+#RecreateForm.recreate-form-wrap .size-chart-table th,
+#RecreateForm.recreate-form-wrap .size-chart-table td,
+.recreate-form-wrap .size-chart-table th,
+.recreate-form-wrap .size-chart-table td,
+.thestitch-form-container .size-chart-table th,
+.thestitch-form-container .size-chart-table td {
+	color: #111111 !important;
+	border-color: #e5e5e5 !important;
+}
+
+#RecreateForm.recreate-form-wrap .size-chart-table tbody tr:nth-child(even),
+.recreate-form-wrap .size-chart-table tbody tr:nth-child(even),
+.thestitch-form-container .size-chart-table tbody tr:nth-child(even) {
+	background: #f7f7f7 !important;
+}
+
+/* Dark mode — site or OS dark theme */
+@media (prefers-color-scheme: dark) {
+	#RecreateForm.recreate-form-wrap .size-chart-panel,
+	.recreate-form-wrap .size-chart-panel,
+	.thestitch-form-container .size-chart-panel {
+		background: #1a1a1a !important;
+		border-color: #333333 !important;
+		color: #f5f5f5 !important;
+	}
+
+	#RecreateForm.recreate-form-wrap .size-chart-note,
+	.recreate-form-wrap .size-chart-note,
+	.thestitch-form-container .size-chart-note {
+		color: #cccccc !important;
+	}
+
+	#RecreateForm.recreate-form-wrap .size-chart-note strong,
+	.recreate-form-wrap .size-chart-note strong,
+	.thestitch-form-container .size-chart-note strong {
+		color: #ffffff !important;
+	}
+
+	#RecreateForm.recreate-form-wrap .size-chart-table-wrap,
+	.recreate-form-wrap .size-chart-table-wrap,
+	.thestitch-form-container .size-chart-table-wrap {
+		background: #141414 !important;
+		border-color: #333333 !important;
+	}
+
+	#RecreateForm.recreate-form-wrap .size-chart-table,
+	.recreate-form-wrap .size-chart-table,
+	.thestitch-form-container .size-chart-table {
+		background: #141414 !important;
+		color: #f5f5f5 !important;
+	}
+
+	#RecreateForm.recreate-form-wrap .size-chart-table thead th,
+	.recreate-form-wrap .size-chart-table thead th,
+	.thestitch-form-container .size-chart-table thead th {
+		background: #f5f5f5 !important;
+		color: #111111 !important;
+	}
+
+	#RecreateForm.recreate-form-wrap .size-chart-table th,
+	#RecreateForm.recreate-form-wrap .size-chart-table td,
+	.recreate-form-wrap .size-chart-table th,
+	.recreate-form-wrap .size-chart-table td,
+	.thestitch-form-container .size-chart-table th,
+	.thestitch-form-container .size-chart-table td {
+		color: #f5f5f5 !important;
+		border-color: #333333 !important;
+	}
+
+	#RecreateForm.recreate-form-wrap .size-chart-table tbody tr:nth-child(even),
+	.recreate-form-wrap .size-chart-table tbody tr:nth-child(even),
+	.thestitch-form-container .size-chart-table tbody tr:nth-child(even) {
+		background: #1f1f1f !important;
+	}
+}
+
+html.dark #RecreateForm.recreate-form-wrap .size-chart-table th,
+html.dark #RecreateForm.recreate-form-wrap .size-chart-table td,
+html.dark .recreate-form-wrap .size-chart-table th,
+html.dark .recreate-form-wrap .size-chart-table td,
+body.dark-mode #RecreateForm.recreate-form-wrap .size-chart-table th,
+body.dark-mode #RecreateForm.recreate-form-wrap .size-chart-table td,
+body.dark-mode .recreate-form-wrap .size-chart-table th,
+body.dark-mode .recreate-form-wrap .size-chart-table td,
+[data-theme="dark"] #RecreateForm.recreate-form-wrap .size-chart-table th,
+[data-theme="dark"] #RecreateForm.recreate-form-wrap .size-chart-table td,
+[data-theme="dark"] .recreate-form-wrap .size-chart-table th,
+[data-theme="dark"] .recreate-form-wrap .size-chart-table td {
+	color: #f5f5f5 !important;
 }

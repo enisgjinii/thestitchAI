@@ -632,6 +632,7 @@ jQuery(document).ready(function($) {
             data: formData,
             processData: false,
             contentType: false,
+            timeout: 120000,
             success: function(response) {
                 if (response.success) {
                     $response.removeClass('loading error').addClass('success').html(response.data);
@@ -676,6 +677,7 @@ jQuery(document).ready(function($) {
             url: thestitch_ajax.ajax_url,
             type: 'POST',
             dataType: 'json',
+            timeout: 30000,
             data: {
                 action: 'thestitch_refresh_nonce'
             }
