@@ -1271,7 +1271,7 @@ class TheStitch_Forms {
         ];
     }
 
-    private function maybe_migrate_legacy_brown_colors() {
+    public function maybe_migrate_legacy_brown_colors() {
         $colors = get_option('thestitch_forms_colors');
         if (!is_array($colors)) {
             return;
