@@ -929,7 +929,7 @@ class TheStitch_Forms {
                             </div>
                             <div class="ts-color-item">
                                 <label>Button Hover Color</label>
-                                <input type="text" name="thestitch_forms_colors[button_hover]" class="ts-color-input" value="<?php echo esc_attr($colors['button_hover'] ?? '#6d5a47'); ?>">
+                                <input type="text" name="thestitch_forms_colors[button_hover]" class="ts-color-input" value="<?php echo esc_attr($colors['button_hover'] ?? '#000000'); ?>">
                             </div>
                             <div class="ts-color-item">
                                 <label>Input Border Color</label>
@@ -937,7 +937,7 @@ class TheStitch_Forms {
                             </div>
                             <div class="ts-color-item">
                                 <label>Input Focus Color</label>
-                                <input type="text" name="thestitch_forms_colors[input_focus]" class="ts-color-input" value="<?php echo esc_attr($colors['input_focus'] ?? '#8b7355'); ?>">
+                                <input type="text" name="thestitch_forms_colors[input_focus]" class="ts-color-input" value="<?php echo esc_attr($colors['input_focus'] ?? '#111111'); ?>">
                             </div>
                             <div class="ts-color-item">
                                 <label>Success Message Color</label>
@@ -1329,26 +1329,26 @@ class TheStitch_Forms {
 
     private function get_email_template_presets() {
         return [
-            'luxury' => '<div style="margin:0;padding:24px;background:#f7f2ea;font-family:Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#2f2a22;">\n'
-                . '<div style="max-width:640px;margin:0 auto;background:#fff;border:1px solid #eadfce;border-radius:18px;overflow:hidden;box-shadow:0 14px 36px rgba(32,22,8,.08);">\n'
-                . '<div style="padding:26px 28px;background:linear-gradient(120deg,#8b7355,#c9a96e);color:#fff;">\n'
+            'luxury' => '<div style="margin:0;padding:24px;background:#f5f5f5;font-family:Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#111111;">\n'
+                . '<div style="max-width:640px;margin:0 auto;background:#fff;border:1px solid #e5e5e5;border-radius:18px;overflow:hidden;box-shadow:0 14px 36px rgba(0,0,0,.08);">\n'
+                . '<div style="padding:26px 28px;background:#111111;color:#fff;">\n'
                 . '<div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;opacity:.92;">{{site_name}}</div>\n'
                 . '<h1 style="margin:8px 0 0;font-size:28px;line-height:1.2;">{{heading}}</h1>\n'
                 . '<p style="margin:10px 0 0;font-size:15px;line-height:1.5;opacity:.96;">{{subheading}}</p>\n'
                 . '</div>\n'
                 . '<div style="padding:24px 28px;">\n'
-                . '<div style="font-size:15px;line-height:1.7;color:#3b3429;">{{message}}</div>\n'
+                . '<div style="font-size:15px;line-height:1.7;color:#333333;">{{message}}</div>\n'
                 . '{{cta_button}}\n'
-                . '<div style="margin-top:20px;padding:16px 18px;background:#fcf8f1;border:1px solid #efe4d6;border-radius:12px;">\n'
-                . '<div style="font-size:13px;font-weight:700;color:#6a563d;letter-spacing:.04em;text-transform:uppercase;">Submission Summary</div>\n'
-                . '<div style="margin-top:8px;font-size:14px;color:#2f2a22;">\n'
+                . '<div style="margin-top:20px;padding:16px 18px;background:#fafafa;border:1px solid #e5e5e5;border-radius:12px;">\n'
+                . '<div style="font-size:13px;font-weight:700;color:#111111;letter-spacing:.04em;text-transform:uppercase;">Submission Summary</div>\n'
+                . '<div style="margin-top:8px;font-size:14px;color:#111111;">\n'
                 . '<div><strong>Type:</strong> {{submission_type}}</div>\n'
                 . '<div><strong>Received:</strong> {{submitted_at}}</div>\n'
                 . '</div>\n'
                 . '{{details_table}}\n'
                 . '</div>\n'
                 . '</div>\n'
-                . '<div style="padding:16px 28px;border-top:1px solid #f2e8da;background:#fffdf9;color:#8a7558;font-size:12px;line-height:1.7;">\n'
+                . '<div style="padding:16px 28px;border-top:1px solid #e5e5e5;background:#ffffff;color:#666666;font-size:12px;line-height:1.7;">\n'
                 . '{{signature}}<br>\n'
                 . '© {{year}} {{site_name}}\n'
                 . '</div>\n'

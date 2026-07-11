@@ -24,10 +24,10 @@ jQuery(function ($) {
     $('#ts-preset-dark').on('click', function () {
         applyPreset({
             colors: {
-                button_primary: '#8b7355', button_hover: '#6d5a47',
-                input_border: '#3a3a3f', input_focus: '#c9a96e',
+                button_primary: '#111111', button_hover: '#000000',
+                input_border: '#3a3a3f', input_focus: '#ffffff',
                 success_color: '#4caf50', error_color: '#f44336',
-                background: '#101014', text_color: '#f3efe8'
+                background: '#101014', text_color: '#f5f5f5'
             },
             branding: { border_radius: '18', button_radius: '999', width: '680', padding: '30' }
         });
@@ -36,24 +36,24 @@ jQuery(function ($) {
     $('#ts-preset-light').on('click', function () {
         applyPreset({
             colors: {
-                button_primary: '#8b7355', button_hover: '#6d5a47',
-                input_border: '#e0e0e0', input_focus: '#8b7355',
+                button_primary: '#111111', button_hover: '#000000',
+                input_border: '#e5e5e5', input_focus: '#111111',
                 success_color: '#4caf50', error_color: '#f44336',
-                background: '#ffffff', text_color: '#333333'
+                background: '#ffffff', text_color: '#111111'
             },
-            branding: { border_radius: '8', button_radius: '8', width: '620', padding: '30' }
+            branding: { border_radius: '8', button_radius: '999', width: '620', padding: '30' }
         });
     });
 
     $('#ts-preset-reset').on('click', function () {
         applyPreset({
             colors: {
-                button_primary: '#8b7355', button_hover: '#6d5a47',
-                input_border: '#e0e0e0', input_focus: '#8b7355',
+                button_primary: '#111111', button_hover: '#000000',
+                input_border: '#e5e5e5', input_focus: '#111111',
                 success_color: '#4caf50', error_color: '#f44336',
-                background: '#ffffff', text_color: '#333333'
+                background: '#ffffff', text_color: '#111111'
             },
-            branding: { border_radius: '8', button_radius: '8', width: '600', padding: '30' }
+            branding: { border_radius: '8', button_radius: '999', width: '600', padding: '30' }
         });
     });
 
@@ -128,11 +128,11 @@ jQuery(function ($) {
 
     /* ── Drag & Drop Email Builder ─────────────────────────── */
     var blockTemplates = {
-        hero:    '<div style="padding:26px 28px;background:linear-gradient(120deg,#8b7355,#c9a96e);color:#fff;"><div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;opacity:.92;">{{site_name}}</div><h1 style="margin:8px 0 0;font-size:28px;line-height:1.2;">{{heading}}</h1><p style="margin:10px 0 0;font-size:15px;line-height:1.5;opacity:.96;">{{subheading}}</p></div>',
-        message: '<div style="padding:24px 28px;"><div style="font-size:15px;line-height:1.7;color:#3b3429;">{{message}}</div></div>',
-        summary: '<div style="padding:0 28px 24px;"><div style="margin-top:8px;padding:16px 18px;background:#fcf8f1;border:1px solid #efe4d6;border-radius:12px;"><div style="font-size:13px;font-weight:700;color:#6a563d;letter-spacing:.04em;text-transform:uppercase;">Submission Summary</div><div style="margin-top:8px;font-size:14px;color:#2f2a22;"><div><strong>Type:</strong> {{submission_type}}</div><div><strong>Received:</strong> {{submitted_at}}</div></div>{{details_table}}</div></div>',
+        hero:    '<div style="padding:26px 28px;background:#111111;color:#fff;"><div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;opacity:.92;">{{site_name}}</div><h1 style="margin:8px 0 0;font-size:28px;line-height:1.2;">{{heading}}</h1><p style="margin:10px 0 0;font-size:15px;line-height:1.5;opacity:.96;">{{subheading}}</p></div>',
+        message: '<div style="padding:24px 28px;"><div style="font-size:15px;line-height:1.7;color:#333333;">{{message}}</div></div>',
+        summary: '<div style="padding:0 28px 24px;"><div style="margin-top:8px;padding:16px 18px;background:#fafafa;border:1px solid #e5e5e5;border-radius:12px;"><div style="font-size:13px;font-weight:700;color:#111111;letter-spacing:.04em;text-transform:uppercase;">Submission Summary</div><div style="margin-top:8px;font-size:14px;color:#111111;"><div><strong>Type:</strong> {{submission_type}}</div><div><strong>Received:</strong> {{submitted_at}}</div></div>{{details_table}}</div></div>',
         cta:     '<div style="padding:0 28px 16px;">{{cta_button}}</div>',
-        footer:  '<div style="padding:16px 28px;border-top:1px solid #f2e8da;background:#fffdf9;color:#8a7558;font-size:12px;line-height:1.7;">{{signature}}<br>\u00a9 {{year}} {{site_name}}</div>'
+        footer:  '<div style="padding:16px 28px;border-top:1px solid #e5e5e5;background:#ffffff;color:#666666;font-size:12px;line-height:1.7;">{{signature}}<br>\u00a9 {{year}} {{site_name}}</div>'
     };
 
     var blockLabels = {
@@ -197,8 +197,8 @@ jQuery(function ($) {
         if (!blocks.length) return;
 
         var html =
-            '<div style="margin:0;padding:24px;background:#f7f2ea;font-family:Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#2f2a22;">\n' +
-            '<div style="max-width:640px;margin:0 auto;background:#fff;border:1px solid #eadfce;border-radius:18px;overflow:hidden;box-shadow:0 14px 36px rgba(32,22,8,.08);">\n' +
+            '<div style="margin:0;padding:24px;background:#f5f5f5;font-family:Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#111111;">\n' +
+            '<div style="max-width:640px;margin:0 auto;background:#fff;border:1px solid #e5e5e5;border-radius:18px;overflow:hidden;box-shadow:0 14px 36px rgba(0,0,0,.08);">\n' +
             blocks.join('\n') +
             '\n</div>\n</div>';
 
@@ -331,7 +331,7 @@ jQuery(function ($) {
 
         // Theme colours
         var themes = {
-            luxury:  { grad: 'linear-gradient(120deg,#8b7355,#c9a96e)', bg: '#f7f2ea', card: '#fff', accent: '#8b7355' },
+            luxury:  { grad: '#111111', bg: '#f5f5f5', card: '#fff', accent: '#111111' },
             classic: { grad: 'linear-gradient(120deg,#5a6776,#8a9dad)', bg: '#f2f4f6', card: '#fff', accent: '#5a6776' },
             minimal: { grad: '#ffffff', bg: '#ffffff', card: '#f8f8f8', accent: '#333' }
         };

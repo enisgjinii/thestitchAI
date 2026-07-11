@@ -53,7 +53,7 @@ $brand = TheStitch_Payment_Email_Brand::luxury_tokens();
             </div>
 
             <?php if ($admin_message) : ?>
-            <div style="margin-top:18px;padding:16px 18px;background:<?php echo esc_attr($brand['note_bg']); ?>;border:1px solid <?php echo esc_attr($brand['note_border']); ?>;border-left:4px solid #c9a96e;border-radius:12px;color:<?php echo esc_attr($brand['body_text']); ?>;font-size:14px;line-height:1.7;">
+            <div style="margin-top:18px;padding:16px 18px;background:<?php echo esc_attr($brand['note_bg']); ?>;border:1px solid <?php echo esc_attr($brand['note_border']); ?>;border-left:4px solid #111111;border-radius:12px;color:<?php echo esc_attr($brand['body_text']); ?>;font-size:14px;line-height:1.7;">
                 <?php echo $admin_message; ?>
             </div>
             <?php endif; ?>
@@ -67,14 +67,14 @@ $brand = TheStitch_Payment_Email_Brand::luxury_tokens();
 
             <?php if ($fabric_url) : ?>
             <div style="margin-top:22px;text-align:center;">
-                <div style="font-size:13px;font-weight:700;color:#6a563d;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">Fabric / Pattern Reference</div>
+                <div style="font-size:13px;font-weight:700;color:#111111;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">Fabric / Pattern Reference</div>
                 <img src="<?php echo esc_url($fabric_url); ?>" alt="Fabric or pattern reference" style="max-width:100%;height:auto;border-radius:12px;border:1px solid <?php echo esc_attr($brand['section_border']); ?>;">
             </div>
             <?php endif; ?>
 
             <?php if (!empty($upload_groups)) : ?>
             <div style="margin-top:22px;">
-                <div style="font-size:13px;font-weight:700;color:#6a563d;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">Uploaded Inspiration</div>
+                <div style="font-size:13px;font-weight:700;color:#111111;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">Uploaded Inspiration</div>
                 <?php foreach ($upload_groups as $group_label => $images) : ?>
                     <p style="margin:0 0 8px;color:<?php echo esc_attr($brand['label_text']); ?>;font-size:13px;font-weight:700;"><?php echo esc_html($group_label); ?></p>
                     <?php foreach ($images as $image) : ?>
@@ -95,7 +95,7 @@ $brand = TheStitch_Payment_Email_Brand::luxury_tokens();
 
             <?php if (!empty($garment_config)) : ?>
             <div style="margin-top:22px;padding:16px 18px;background:<?php echo esc_attr($brand['note_bg']); ?>;border:1px solid <?php echo esc_attr($brand['note_border']); ?>;border-radius:12px;">
-                <div style="font-size:13px;font-weight:700;color:#6a563d;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px;">Garment Configuration</div>
+                <div style="font-size:13px;font-weight:700;color:#111111;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px;">Garment Configuration</div>
                 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
                     <?php foreach ($garment_config as $label => $value) : ?>
                     <tr>
@@ -109,7 +109,7 @@ $brand = TheStitch_Payment_Email_Brand::luxury_tokens();
 
             <?php if (!empty($sizing_details)) : ?>
             <div style="margin-top:18px;padding:16px 18px;background:<?php echo esc_attr($brand['note_bg']); ?>;border:1px solid <?php echo esc_attr($brand['note_border']); ?>;border-radius:12px;">
-                <div style="font-size:13px;font-weight:700;color:#6a563d;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px;">Sizing Details</div>
+                <div style="font-size:13px;font-weight:700;color:#111111;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px;">Sizing Details</div>
                 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
                     <?php foreach ($sizing_details as $label => $value) : ?>
                     <tr>
@@ -129,7 +129,7 @@ $brand = TheStitch_Payment_Email_Brand::luxury_tokens();
         </div>
 
         <div style="padding:16px 28px;border-top:1px solid #f2e8da;background:<?php echo esc_attr($brand['footer_bg']); ?>;color:<?php echo esc_attr($brand['footer_text']); ?>;font-size:12px;line-height:1.7;text-align:center;">
-            Questions about your quote? Reply to this email<?php echo $support_email ? ' or contact us at <a href="mailto:' . esc_attr($support_email) . '" style="color:#6a563d;">' . esc_html($support_email) . '</a>' : ''; ?>.<br>
+            Questions about your quote? Reply to this email<?php echo $support_email ? ' or contact us at <a href="mailto:' . esc_attr($support_email) . '" style="color:#111111;">' . esc_html($support_email) . '</a>' : ''; ?>.<br>
             © <?php echo esc_html(gmdate('Y')); ?> <?php echo esc_html($site_name); ?>
         </div>
     </div>

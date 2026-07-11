@@ -45,7 +45,7 @@
 .ts-stat-card .ts-stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--ts-muted); font-weight: 600; margin-bottom: 6px; }
 .ts-stat-card .ts-stat-value { font-size: 24px; font-weight: 700; color: var(--ts-text); margin-bottom: 4px; line-height: 1; }
 .ts-stat-card .ts-stat-note { font-size: 12px; color: var(--ts-muted); line-height: 1.4; }
-.ts-sc-chip { display: inline-block; font-size: 12px; font-family: 'SFMono-Regular', Consolas, monospace; background: #f3ede5; color: var(--ts-dark); padding: 3px 9px; border-radius: 5px; margin: 3px 3px 0 0; }
+.ts-sc-chip { display: inline-block; font-size: 12px; font-family: 'SFMono-Regular', Consolas, monospace; background: #f5f5f5; color: var(--ts-dark); padding: 3px 9px; border-radius: 5px; margin: 3px 3px 0 0; border: 1px solid var(--ts-border); }
 
 /* ── Preset Quick Buttons ───────────────────────────────────── */
 .ts-presets { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; align-items: center; }
@@ -789,13 +789,14 @@
 }
 .ts-doc-card code {
     display: inline-block;
-    background: #f3ede5;
-    color: var(--ts-dark, #6d5a47);
+    background: #f5f5f5;
+    color: var(--ts-dark, #000000);
     padding: 5px 12px;
     border-radius: 7px;
     font-size: 12px;
     font-family: 'SFMono-Regular', Consolas, 'Courier New', monospace;
     margin-top: 2px;
+    border: 1px solid var(--ts-border, #e5e5e5);
 }
 
 /* Available forms list */
