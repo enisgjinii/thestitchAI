@@ -524,6 +524,144 @@ class TheStitch_Forms {
         return implode("\n", $lines);
     }
 
+    private function get_admin_notification_recipient() {
+        $email_settings = get_option('thestitch_forms_email', $this->get_default_email());
+        $recipient = !empty($email_settings['recipient']) ? $email_settings['recipient'] : get_option('admin_email');
+        return is_email($recipient) ? $recipient : get_option('admin_email');
+    }
+
+    private function create_email_thumbnail_url($filepath) {
+        if (!file_exists($filepath) || !function_exists('wp_get_image_editor')) {
+            return '';
+        }
+
+        $pathinfo = pathinfo($filepath);
+        $thumb_filename = ($pathinfo['filename'] ?? 'image') . '-email-thumb.jpg';
+        $thumb_path = trailingslashit($pathinfo['dirname'] ?? dirname($filepath)) . $thumb_filename;
+
+        if (file_exists($thumb_path)) {
+            $upload_dir = wp_upload_dir();
+            return trailingslashit($upload_dir['baseurl']) . 'thestitch-forms/' . $thumb_filename;
+        }
+
+        $editor = wp_get_image_editor($filepath);
+        if (is_wp_error($editor)) {
+            return '';
+        }
+
+        $editor->resize(180, 180, true);
+        $editor->set_quality(72);
+        $saved = $editor->save($thumb_path, 'image/jpeg');
+
+        if (is_wp_error($saved) || empty($saved['path'])) {
+            return '';
+        }
+
+        $upload_dir = wp_upload_dir();
+        return trailingslashit($upload_dir['baseurl']) . 'thestitch-forms/' . basename($saved['path']);
+    }
+
+    private function build_admin_submission_email_html($title, $details, $uploaded_files = [], $admin_url = '') {
+        $rows_html = '';
+        foreach ($details as $label => $value) {
+            if ($value === '' || $value === null) {
+                continue;
+            }
+            $rows_html .= '<tr>';
+            $rows_html .= '<td style="padding:8px 0;border-bottom:1px solid #eeeeee;color:#666666;font-weight:600;width:42%;">' . esc_html($label) . '</td>';
+            $rows_html .= '<td style="padding:8px 0;border-bottom:1px solid #eeeeee;color:#111111;">' . nl2br(esc_html((string) $value)) . '</td>';
+            $rows_html .= '</tr>';
+        }
+
+        $images_html = '';
+        if (!empty($uploaded_files) && is_array($uploaded_files)) {
+            $group_labels = [
+                'dream_images' => 'Outfit Images',
+                'ref_images' => 'Reference Images',
+                'color_images' => 'Color / Pattern Files',
+            ];
+            $grouped = [];
+            foreach ($uploaded_files as $file) {
+                $field = isset($file['field']) ? $file['field'] : 'dream_images';
+                if (!isset($grouped[$field])) {
+                    $grouped[$field] = [];
+                }
+                $grouped[$field][] = $file;
+            }
+
+            $images_html .= '<div style="margin-top:18px;">';
+            $images_html .= '<div style="font-size:12px;font-weight:700;color:#111111;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">Uploaded Images</div>';
+
+            foreach ($grouped as $field => $files) {
+                $label = isset($group_labels[$field]) ? $group_labels[$field] : ucwords(str_replace('_', ' ', $field));
+                $images_html .= '<div style="margin-bottom:12px;">';
+                $images_html .= '<div style="font-size:12px;font-weight:600;color:#666666;margin-bottom:6px;">' . esc_html($label) . '</div>';
+                $images_html .= '<div>';
+
+                $shown = 0;
+                foreach ($files as $file) {
+                    if ($shown >= 4) {
+                        break;
+                    }
+
+                    $filepath = '';
+                    if (!empty($file['stored_name'])) {
+                        $upload_dir = wp_upload_dir();
+                        $filepath = trailingslashit($upload_dir['basedir']) . 'thestitch-forms/' . basename((string) $file['stored_name']);
+                    }
+
+                    $thumb_url = $filepath ? $this->create_email_thumbnail_url($filepath) : '';
+                    if ($thumb_url === '' && !empty($file['url'])) {
+                        $thumb_url = esc_url($file['url']);
+                    }
+
+                    if ($thumb_url === '') {
+                        continue;
+                    }
+
+                    $images_html .= '<img src="' . esc_url($thumb_url) . '" alt="' . esc_attr($file['original_name'] ?? 'Upload') . '" width="90" height="90" style="width:90px;height:90px;object-fit:cover;border-radius:8px;border:1px solid #e5e5e5;margin:0 8px 8px 0;display:inline-block;">';
+                    $shown++;
+                }
+
+                $remaining = max(0, count($files) - $shown);
+                if ($remaining > 0) {
+                    $images_html .= '<span style="display:inline-block;font-size:12px;color:#666666;vertical-align:top;padding-top:34px;">+' . esc_html((string) $remaining) . ' more</span>';
+                }
+
+                $images_html .= '</div></div>';
+            }
+
+            $images_html .= '</div>';
+        }
+
+        $admin_button_html = $admin_url
+            ? '<div style="margin-top:20px;text-align:center;"><a href="' . esc_url($admin_url) . '" style="display:inline-block;background:#111111;color:#ffffff;padding:12px 22px;text-decoration:none;border-radius:8px;font-weight:600;font-size:14px;">View in WordPress</a></div>'
+            : '';
+
+        return '
+            <div style="margin:0;padding:24px;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,Helvetica,Arial,sans-serif;color:#111111;">
+                <div style="max-width:560px;margin:0 auto;background:#ffffff;border:1px solid #e5e5e5;border-radius:14px;overflow:hidden;">
+                    <div style="padding:22px 24px;background:#111111;color:#ffffff;">
+                        <div style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.9;">The Stitch</div>
+                        <h1 style="margin:8px 0 0;font-size:24px;line-height:1.2;">' . esc_html($title) . '</h1>
+                    </div>
+                    <div style="padding:22px 24px;">
+                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">' . $rows_html . '</table>
+                        ' . $images_html . '
+                        ' . $admin_button_html . '
+                    </div>
+                </div>
+            </div>
+        ';
+    }
+
+    private function send_admin_submission_email($to, $subject, $title, $details, $uploaded_files = [], $post_id = 0) {
+        $admin_url = $post_id ? get_edit_post_link($post_id, 'raw') : admin_url('admin.php?page=thestitch-submissions');
+        $html = $this->build_admin_submission_email_html($title, $details, $uploaded_files, $admin_url);
+        $headers = ['Content-Type: text/html; charset=UTF-8'];
+        wp_mail($to, $subject, $html, $headers);
+    }
+
     private function send_customer_confirmation_email($email, $subject, $message, $context = []) {
         if (empty($email) || !is_email($email)) {
             return;
@@ -2316,10 +2454,16 @@ class TheStitch_Forms {
             
             // Send admin email
             $email_settings = get_option('thestitch_forms_email', $this->get_default_email());
-            $to = !empty($email_settings['recipient']) ? $email_settings['recipient'] : get_option('admin_email');
+            $to = $this->get_admin_notification_recipient();
             $subject = !empty($email_settings['bridal_subject']) ? $email_settings['bridal_subject'] : 'New Bridal Consultation Request';
-            $body = "Name: $name\nEmail: $email\nPhone: $stored_phone\nCountry ISO: $phone_country_iso\nPreferred Date/Time: $preferred_date $preferred_time\nWedding Date: $wedding_date\n\nMessage:\n$message";
-            wp_mail($to, $subject, $body);
+            $this->send_admin_submission_email($to, $subject, 'New Bridal Consultation', [
+                'Name' => $name,
+                'Email' => $email,
+                'Phone' => $stored_phone,
+                'Preferred Date/Time' => trim($preferred_date . ' ' . $preferred_time),
+                'Wedding Date' => $wedding_date,
+                'Message' => $message,
+            ], [], $post_id);
 
             // Optional customer confirmation
             if (!empty($email_settings['send_customer_email']) && $email_settings['send_customer_email'] === 'yes') {
@@ -2479,18 +2623,32 @@ class TheStitch_Forms {
 
             // Send admin email
             $email_settings = get_option('thestitch_forms_email', $this->get_default_email());
-            $to = !empty($email_settings['recipient']) ? $email_settings['recipient'] : get_option('admin_email');
+            $to = $this->get_admin_notification_recipient();
             $subject = !empty($email_settings['dream_subject']) ? $email_settings['dream_subject'] : 'New Recreate Form Submission';
             $measurement_summary = $sizing_type === 'custom'
                 ? $this->build_measurements_email_summary($custom_fit_type, $custom_measurements, $measurement_unit)
                 : 'Standard Size: ' . sanitize_text_field(wp_unslash($_POST['standard_size']));
 
-            $body = "Email: $email\n";
+            $admin_details = [
+                'Email' => $email,
+                'Sizing Type' => ucfirst($sizing_type),
+                'Measurements / Size' => $measurement_summary,
+                'Notes' => $notes,
+                'Total Files Uploaded' => (string) count($uploaded_files),
+            ];
+
             if ($referral_code !== '') {
-                $body .= "Referral Code: $referral_code\n";
+                $admin_details['Referral Code'] = $referral_code;
             }
-            $body .= "Sizing Type: $sizing_type\n$measurement_summary\nNotes: $notes\nTotal Files Uploaded: " . count($uploaded_files);
-            wp_mail($to, $subject, $body);
+
+            $this->send_admin_submission_email(
+                $to,
+                $subject,
+                'New Recreate Request',
+                $admin_details,
+                $uploaded_files,
+                $post_id
+            );
 
             // Optional customer confirmation
             if (!empty($email_settings['send_customer_email']) && $email_settings['send_customer_email'] === 'yes') {

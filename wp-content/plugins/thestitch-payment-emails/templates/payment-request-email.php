@@ -61,14 +61,14 @@ $brand = TheStitch_Payment_Email_Brand::luxury_tokens();
             <?php if ($design_preview_url) : ?>
             <div style="margin-top:22px;text-align:center;">
                 <div style="font-size:13px;font-weight:700;color:#111111;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">Design Preview</div>
-                <img src="<?php echo esc_url($design_preview_url); ?>" alt="Design preview" style="max-width:100%;height:auto;border-radius:12px;border:1px solid <?php echo esc_attr($brand['section_border']); ?>;">
+                <img src="<?php echo esc_url($design_preview_url); ?>" alt="Design preview" style="max-width:220px;max-height:220px;width:220px;height:auto;border-radius:12px;border:1px solid <?php echo esc_attr($brand['section_border']); ?>;display:inline-block;">
             </div>
             <?php endif; ?>
 
             <?php if ($fabric_url) : ?>
             <div style="margin-top:22px;text-align:center;">
                 <div style="font-size:13px;font-weight:700;color:#111111;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;">Fabric / Pattern Reference</div>
-                <img src="<?php echo esc_url($fabric_url); ?>" alt="Fabric or pattern reference" style="max-width:100%;height:auto;border-radius:12px;border:1px solid <?php echo esc_attr($brand['section_border']); ?>;">
+                <img src="<?php echo esc_url($fabric_url); ?>" alt="Fabric or pattern reference" style="max-width:220px;max-height:220px;width:220px;height:auto;border-radius:12px;border:1px solid <?php echo esc_attr($brand['section_border']); ?>;display:inline-block;">
             </div>
             <?php endif; ?>
 
@@ -79,7 +79,7 @@ $brand = TheStitch_Payment_Email_Brand::luxury_tokens();
                     <p style="margin:0 0 8px;color:<?php echo esc_attr($brand['label_text']); ?>;font-size:13px;font-weight:700;"><?php echo esc_html($group_label); ?></p>
                     <?php foreach ($images as $image) : ?>
                         <div style="margin-bottom:12px;text-align:center;">
-                            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['label']); ?>" style="max-width:100%;height:auto;border-radius:10px;border:1px solid <?php echo esc_attr($brand['section_border']); ?>;">
+                            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['label']); ?>" style="max-width:180px;max-height:180px;width:180px;height:auto;object-fit:cover;border-radius:10px;border:1px solid <?php echo esc_attr($brand['section_border']); ?>;display:inline-block;margin:0 8px 8px 0;">
                             <div style="font-size:12px;color:<?php echo esc_attr($brand['label_text']); ?>;margin-top:4px;"><?php echo esc_html($image['label']); ?></div>
                         </div>
                     <?php endforeach; ?>
