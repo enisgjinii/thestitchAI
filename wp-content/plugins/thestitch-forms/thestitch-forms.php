@@ -61,6 +61,9 @@ class TheStitch_Forms {
         // Frontend safeguards: normalize CTA anchors on /create and /recreate,
         // and prevent duplicated configurator embeds on /create.
         add_action('wp_footer', [$this, 'dedupe_create_configurator_embed'], 100);
+
+        // Notify admin when a new Create (WooCommerce / 3D configurator) order arrives.
+        add_action('woocommerce_new_order', [$this, 'notify_admin_on_woocommerce_order'], 20, 2);
     }
 
     public function dedupe_create_configurator_embed() {
@@ -655,11 +658,108 @@ class TheStitch_Forms {
         ';
     }
 
-    private function send_admin_submission_email($to, $subject, $title, $details, $uploaded_files = [], $post_id = 0) {
-        $admin_url = $post_id ? get_edit_post_link($post_id, 'raw') : admin_url('admin.php?page=thestitch-submissions');
+    private function send_admin_submission_email($to, $subject, $title, $details, $uploaded_files = [], $admin_url = '') {
+        if ($admin_url === '' && !empty($uploaded_files['__post_id'])) {
+            $post_id = (int) $uploaded_files['__post_id'];
+            unset($uploaded_files['__post_id']);
+            $admin_url = get_edit_post_link($post_id, 'raw');
+        }
+
+        if ($admin_url === '') {
+            $admin_url = admin_url('admin.php?page=thestitch-submissions');
+        }
+
         $html = $this->build_admin_submission_email_html($title, $details, $uploaded_files, $admin_url);
         $headers = ['Content-Type: text/html; charset=UTF-8'];
         wp_mail($to, $subject, $html, $headers);
+    }
+
+    public function notify_admin_on_woocommerce_order($order_id, $order = null) {
+        if (!function_exists('wc_get_order')) {
+            return;
+        }
+
+        if (!$order instanceof WC_Order) {
+            $order = wc_get_order($order_id);
+        }
+
+        if (!$order) {
+            return;
+        }
+
+        $is_configurator_order = $order->get_meta('_garment_configurator_order') === 'yes';
+        if (!$is_configurator_order) {
+            return;
+        }
+
+        $recipient = $this->get_admin_notification_recipient();
+        if (!is_email($recipient)) {
+            return;
+        }
+
+        $customer_name = trim($order->get_formatted_billing_full_name());
+        if ($customer_name === '') {
+            $customer_name = 'Guest customer';
+        }
+
+        $garment_config_raw = $order->get_meta('_garment_config_full');
+        $garment_config = [];
+        if (is_string($garment_config_raw) && $garment_config_raw !== '') {
+            $decoded = json_decode($garment_config_raw, true);
+            if (is_array($decoded)) {
+                $garment_config = $decoded;
+            }
+        }
+
+        $details = [
+            'Order #' => (string) $order->get_id(),
+            'Customer' => $customer_name,
+            'Email' => $order->get_billing_email() ?: 'Not provided',
+            'Phone' => $order->get_billing_phone() ?: 'Not provided',
+            'Total' => wp_strip_all_tags($order->get_formatted_order_total()),
+        ];
+
+        $referral_code = $order->get_meta('_thestitch_referral_code');
+        if ($referral_code !== '') {
+            $details['Referral Code'] = $referral_code;
+        }
+
+        if (!empty($garment_config)) {
+            $details['Garment'] = (string) ($garment_config['designDetails']['garmentType'] ?? $garment_config['garmentType'] ?? 'Custom');
+            $details['Size'] = (string) ($garment_config['size'] ?? (!empty($garment_config['measurements']) ? 'Custom measurements' : 'Not selected'));
+            $details['Primary Color'] = (string) ($garment_config['primaryColor'] ?? $garment_config['colors']['primary'] ?? 'N/A');
+        }
+
+        $pattern_url = $order->get_meta('Custom Pattern URL');
+        if ($pattern_url === '') {
+            $pattern_url = $order->get_meta('custom_pattern_url');
+        }
+
+        $uploaded_files = [];
+        if ($pattern_url) {
+            $uploaded_files[] = [
+                'field' => 'dream_images',
+                'original_name' => 'Fabric / pattern',
+                'url' => esc_url_raw($pattern_url),
+            ];
+        }
+
+        $preview_3d = $order->get_meta('View 3D Design');
+        if ($preview_3d) {
+            $details['3D Design Link'] = $preview_3d;
+        }
+
+        $subject = sprintf('New Create order #%d — %s', $order->get_id(), $customer_name);
+        $admin_url = method_exists($order, 'get_edit_order_url') ? $order->get_edit_order_url() : admin_url('admin.php?page=wc-orders&action=edit&id=' . $order->get_id());
+
+        $this->send_admin_submission_email(
+            $recipient,
+            $subject,
+            'New Create Order',
+            $details,
+            $uploaded_files,
+            $admin_url
+        );
     }
 
     private function send_customer_confirmation_email($email, $subject, $message, $context = []) {
@@ -1209,9 +1309,9 @@ class TheStitch_Forms {
                     <div class="ts-card-head">Notification Settings</div>
                     <div class="ts-card-body">
                         <div class="ts-field">
-                            <label>Recipient Email Address</label>
+                            <label>Order notification email</label>
                             <input type="email" name="thestitch_forms_email[recipient]" value="<?php echo esc_attr($email['recipient'] ?? get_option('admin_email')); ?>">
-                            <p class="ts-hint">Where submission notifications are sent.</p>
+                            <p class="ts-hint">New Bridal, Recreate, and Create (3D configurator) orders are emailed to this address — use the inbox you check on your phone.</p>
                         </div>
                         <div class="ts-field">
                             <label>Email Subject — Bridal Form</label>
@@ -2463,7 +2563,7 @@ class TheStitch_Forms {
                 'Preferred Date/Time' => trim($preferred_date . ' ' . $preferred_time),
                 'Wedding Date' => $wedding_date,
                 'Message' => $message,
-            ], [], $post_id);
+            ], [], get_edit_post_link($post_id, 'raw'));
 
             // Optional customer confirmation
             if (!empty($email_settings['send_customer_email']) && $email_settings['send_customer_email'] === 'yes') {
@@ -2647,7 +2747,7 @@ class TheStitch_Forms {
                 'New Recreate Request',
                 $admin_details,
                 $uploaded_files,
-                $post_id
+                get_edit_post_link($post_id, 'raw')
             );
 
             // Optional customer confirmation
